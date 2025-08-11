@@ -3,12 +3,8 @@
 
 **Note:**  
 This plugin is specifically designed to comply with privacy regulations in Israel
-
 (Privacy Protection Law Amendment 13).
-
 Therefore, all documentation and explanations are provided in Hebrew.
-
----
 
 # תוסף תאימות פרטיות לוורדפרס ו-WooCommerce
 
