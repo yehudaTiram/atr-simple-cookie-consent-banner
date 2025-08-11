@@ -1,4 +1,5 @@
-# Privacy Compliance Plugin for WordPress/WooCommerce
+##  Privacy Compliance Plugin for WordPress/WooCommerce
+# תוסף תאימות פרטיות לוורדפרס ו-WooCommerce
 
 **Note:**  
 This plugin is specifically designed to comply with privacy regulations in Israel
