@@ -2,7 +2,11 @@
 # Privacy Compliance Plugin for WordPress/WooCommerce
 
 **Note:**  
-This plugin is specifically designed to comply with privacy regulations in Israel (Privacy Protection Law Amendment 13). Therefore, all documentation and explanations are provided in Hebrew.
+This plugin is specifically designed to comply with privacy regulations in Israel
+
+(Privacy Protection Law Amendment 13).
+
+Therefore, all documentation and explanations are provided in Hebrew.
 
 ---
 
