@@ -7,9 +7,10 @@
 יהודה תירם וחברת אתרים ת.ר. בע"מ, מפעילי האתר, אינם נושאים באחריות כלשהי, ישירה או עקיפה, לנזקים, אובדן מידע או כל נזק אחר העלול להיגרם כתוצאה מהתקנה, שימוש או ניסיון שימוש בתוסף.
 
 מדיניות הפרטיות, הסברים וההנחיות הכלולים בתוסף ניתנים למטרות מידע בלבד ואינם מהווים ייעוץ משפטי או התחייבות משפטית כלשהי. אין להסתמך עליהם כהנחיה מחייבת או כתשתית לפעולה משפטית. מומלץ לעיין בחוקים הרלוונטיים ולהתאים את השימוש באתר ובתוסף בהתאם לצרכיך הספציפיים.
-[[Link Name](https://www.gov.il/he/pages/13_amendment)]([url](https://www.gov.il/he/pages/13_amendment)){target="_blank"}
 
-[https://www.gov.il/BlobFolder/news/13_amendment/he/תיקון 13 - פרסום בספר החוקים.pdf](https://www.gov.il/BlobFolder/news/13_amendment/he/תיקון 13 - פרסום בספר החוקים.pdf){target="_blank"}
+[https://www.gov.il/he/pages/13_amendment](https://www.gov.il/he/pages/13_amendment)
+
+[https://www.gov.il/BlobFolder/news/13_amendment/he/תיקון 13 - פרסום בספר החוקים.pdf](<https://www.gov.il/BlobFolder/news/13_amendment/he/תיקון 13 - פרסום בספר החוקים.pdf>)
 
 ## לבעלי אתרי ווקומרס
 ברירת המחדל ב־WooCommerce לגבי איסוף מידע אישי כוללת:
