@@ -22,7 +22,7 @@ This plugin is specifically designed to comply with privacy regulations in Israe
 
 [https://atarimtr.co.il/איך-להתאים-אתר-ווקומרס-woocommerce-לתיקון-13-לחו/](https://atarimtr.co.il/איך-להתאים-אתר-ווקומרס-woocommerce-לתיקון-13-לחו/)
 
-לשאלות, תיעוד נוסף או סיוע, מוזמנים לפנות אלי
+לשאלות, תיעוד נוסף או סיוע, מוזמנים לפנות אלי (https://atarimtr.co.il/צרו-קשר/)[https://atarimtr.co.il/צרו-קשר/]
 
 הצהרת אחריות לשימוש בתוסף ולמדיניות הפרטיות
 
