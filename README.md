@@ -1,4 +1,3 @@
-```markdown
 # Privacy Compliance Plugin for WordPress/WooCommerce
 
 **Note:**  
@@ -22,6 +21,5 @@ Therefore, all documentation and explanations are provided in Hebrew.
 
 ---
 
-לשאלות, תיעוד נוסף או סיוע, מוזמנים לפנות אלינו.
-```
+לשאלות, תיעוד נוסף או סיוע, מוזמנים לפנות אלינו
 </div>
