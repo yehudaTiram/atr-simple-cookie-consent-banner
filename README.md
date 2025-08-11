@@ -5,7 +5,7 @@
 This plugin is specifically designed to comply with privacy regulations in Israel
 (Privacy Protection Law Amendment 13).
 Therefore, all documentation and explanations are provided in Hebrew.
-
+<div dir="rtl">
 # תוסף תאימות פרטיות לוורדפרס ו-WooCommerce
 
 תוסף זה פותח במטרה לסייע לבעלי אתרים וחנויות מקוונות בישראל לעמוד בדרישות תיקון 13 לחוק הגנת הפרטיות.
@@ -24,3 +24,4 @@ Therefore, all documentation and explanations are provided in Hebrew.
 
 לשאלות, תיעוד נוסף או סיוע, מוזמנים לפנות אלינו.
 ```
+</div>
