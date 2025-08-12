@@ -4,7 +4,8 @@
 **Note:**  
 This plugin is specifically designed to comply with privacy regulations in Israel (Privacy Protection Law Amendment 13). Therefore, all documentation and explanations are provided in Hebrew.
 <div dir="rtl">
-## הבהרה: התוסף מתאים לכל אתר. המיקוד בווקומרס הוא בעיקר בגלל הצרכים המיוחדים של אתרי מסחר המתבטאים באיסוף נתונים הכרחי בכל רכישה באתר.
+
+  ## הבהרה: התוסף מתאים לכל אתר. המיקוד בווקומרס הוא בעיקר בגלל הצרכים המיוחדים של אתרי מסחר המתבטאים באיסוף נתונים הכרחי בכל רכישה באתר.
 
 תוסף זה פותח במטרה לסייע לבעלי אתרים וחנויות מקוונות בישראל לעמוד בדרישות תיקון 13 לחוק הגנת הפרטיות.
 
