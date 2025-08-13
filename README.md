@@ -3,7 +3,7 @@
 https://atarimtr.co.il/wp-content/uploads/2025/08/atr-simple-cookie-consent-banner.zip
 
 --------------------
-##  Privacy Compliance Plugin for WordPress/WooCommerce
+###  Privacy Compliance Plugin for WordPress/WooCommerce
 **Note:**  
 
 This plugin is specifically designed to comply with privacy regulations in Israel (Privacy Protection Law Amendment 13). Therefore, all documentation and explanations are provided in Hebrew.
