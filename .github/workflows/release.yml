@@ -67,14 +67,11 @@ jobs:
         
     - name: Upload release asset
       if: github.event_name == 'release'
-      uses: actions/upload-release-asset@v1
+      run: |
+        # Use GitHub CLI to upload the asset (no deprecation warnings)
+        gh release upload ${{ github.event.release.tag_name }} atr-simple-cookie-consent-banner.zip --clobber
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./atr-simple-cookie-consent-banner.zip
-        asset_name: atr-simple-cookie-consent-banner.zip
-        asset_content_type: application/zip
         
     - name: Upload workflow artifact
       if: github.event_name == 'workflow_dispatch'
