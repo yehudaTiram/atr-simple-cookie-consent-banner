@@ -1,0 +1,37 @@
+name: Build Release Package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Create release package
+      run: |
+        # Create a clean directory for the release
+        mkdir release-package
+        
+        # Copy only the source files (exclude zip files)
+        cp atr-simple-cookie-consent-banner.php release-package/
+        cp atr-scb.css release-package/
+        cp atr-scb.js release-package/
+        
+        # Create the zip file with custom name (no version number)
+        cd release-package
+        zip -r ../atr-simple-cookie-consent-banner.zip .
+        
+    - name: Upload release asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./atr-simple-cookie-consent-banner.zip
+        asset_name: atr-simple-cookie-consent-banner.zip
+        asset_content_type: application/zip
