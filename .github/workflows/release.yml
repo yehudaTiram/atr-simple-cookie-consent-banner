@@ -17,14 +17,25 @@ jobs:
         # Create a clean directory for the release
         mkdir release-package
         
-        # Copy only the source files (exclude zip files)
+        # Copy only the essential plugin files (exclude zip files, docs, etc.)
         cp atr-simple-cookie-consent-banner.php release-package/
         cp atr-scb.css release-package/
         cp atr-scb.js release-package/
         
+        # Remove any zip files that might have been copied
+        find release-package/ -name "*.zip" -delete
+        
+        # Verify contents (debug)
+        echo "Files in release package:"
+        ls -la release-package/
+        
         # Create the zip file with custom name (no version number)
         cd release-package
         zip -r ../atr-simple-cookie-consent-banner.zip .
+        
+        # Verify zip contents (debug)
+        echo "Zip file contents:"
+        unzip -l ../atr-simple-cookie-consent-banner.zip
         
     - name: Upload release asset
       uses: actions/upload-release-asset@v1
