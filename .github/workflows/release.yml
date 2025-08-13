@@ -1,6 +1,12 @@
 name: Build Release Package
 
 on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version'
+        required: true
+        default: '1.0.4'
   release:
     types: [published]
 
@@ -12,40 +18,37 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Create release package
+    - name: Setup build environment
       run: |
-        # Create a clean directory for the release
+        # Create a completely clean directory
+        rm -rf release-package
         mkdir release-package
         
-        # Copy only the essential plugin files (exclude zip files, docs, etc.)
+    - name: Create release package
+      run: |
+        # Copy ONLY the essential plugin files
         cp atr-simple-cookie-consent-banner.php release-package/
         cp atr-scb.css release-package/
         cp atr-scb.js release-package/
         
-        # Remove any zip files that might have been copied
-        find release-package/ -name "*.zip" -delete
-        
-        # Verify contents (debug)
-        echo "Files in release package:"
+        # Verify contents
+        echo "=== Files in release package ==="
         ls -la release-package/
         
-        # Create the zip file with custom name (no version number)
+        # Create zip with exact name
         cd release-package
         zip -r ../atr-simple-cookie-consent-banner.zip .
         
-        # Verify zip contents (debug)
-        echo "Zip file contents:"
+        # Verify zip contents
+        echo "=== Zip file contents ==="
         unzip -l ../atr-simple-cookie-consent-banner.zip
         
-        # Verify the zip file was created
-        if [ ! -f "../atr-simple-cookie-consent-banner.zip" ]; then
-          echo "Error: Zip file was not created!"
-          exit 1
-        fi
-        
-        echo "Release package created successfully!"
+        # Check file size
+        echo "=== Zip file size ==="
+        ls -lh ../atr-simple-cookie-consent-banner.zip
         
     - name: Upload release asset
+      if: github.event_name == 'release'
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -54,3 +57,10 @@ jobs:
         asset_path: ./atr-simple-cookie-consent-banner.zip
         asset_name: atr-simple-cookie-consent-banner.zip
         asset_content_type: application/zip
+        
+    - name: Upload workflow artifact
+      if: github.event_name == 'workflow_dispatch'
+      uses: actions/upload-artifact@v3
+      with:
+        name: plugin-release-package
+        path: atr-simple-cookie-consent-banner.zip
