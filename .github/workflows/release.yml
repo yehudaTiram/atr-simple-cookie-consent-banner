@@ -23,27 +23,29 @@ jobs:
       
     - name: Setup build environment
       run: |
-        # Create a completely clean directory
+        # Create a completely clean directory structure
         rm -rf release-package
-        mkdir release-package
+        mkdir -p release-package/atr-simple-cookie-consent-banner
         
     - name: Create release package
       run: |
-        # Copy ONLY the essential plugin files (exclude everything else)
-        cp atr-simple-cookie-consent-banner.php release-package/
-        cp atr-scb.css release-package/
-        cp atr-scb.js release-package/
+        # Copy ONLY the essential plugin files into the plugin directory
+        cp atr-simple-cookie-consent-banner.php release-package/atr-simple-cookie-consent-banner/
+        cp atr-scb.css release-package/atr-simple-cookie-consent-banner/
+        cp atr-scb.js release-package/atr-simple-cookie-consent-banner/
         
-        # Verify contents - should only have 3 files
-        echo "=== Files in release package ==="
+        # Verify contents - should have plugin directory with 3 files
+        echo "=== Directory structure ==="
         ls -la release-package/
-        echo "=== Expected: 3 files only ==="
+        echo "=== Files in plugin directory ==="
+        ls -la release-package/atr-simple-cookie-consent-banner/
+        echo "=== Expected: 1 directory with 3 files ==="
         
-        # Create zip with exact name (no version numbers)
+        # Create zip with proper WordPress structure
         cd release-package
         zip -r ../atr-simple-cookie-consent-banner.zip .
         
-        # Verify zip contents - should only have 3 files
+        # Verify zip contents - should have plugin directory with 3 files
         echo "=== Zip file contents ==="
         unzip -l ../atr-simple-cookie-consent-banner.zip
         
@@ -51,8 +53,13 @@ jobs:
         echo "=== Zip file size ==="
         ls -lh ../atr-simple-cookie-consent-banner.zip
         
-        # Verify no .github folder or other files
-        echo "=== Verifying clean package ==="
+        # Verify proper structure
+        echo "=== Verifying WordPress plugin structure ==="
+        if ! unzip -l ../atr-simple-cookie-consent-banner.zip | grep -q "atr-simple-cookie-consent-banner/"; then
+          echo "ERROR: Plugin directory not found in zip!"
+          exit 1
+        fi
+        
         if unzip -l ../atr-simple-cookie-consent-banner.zip | grep -q "\.github"; then
           echo "ERROR: .github folder found in zip!"
           exit 1
@@ -63,7 +70,7 @@ jobs:
           exit 1
         fi
         
-        echo "SUCCESS: Clean package created with only essential files!"
+        echo "SUCCESS: WordPress plugin package created with proper structure!"
         
     - name: Upload release asset
       if: github.event_name == 'release'
