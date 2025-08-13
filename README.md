@@ -1,4 +1,7 @@
 # תוסף תאימות פרטיות לוורדפרס ו-WooCommerce
+## ניתן להוריד את הקובץ עם הגרסה האחרונה מ:
+https://atarimtr.co.il/wp-content/uploads/2025/08/atr-simple-cookie-consent-banner.zip
+
 ##  Privacy Compliance Plugin for WordPress/WooCommerce
 
 **Note:**  
