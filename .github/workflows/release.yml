@@ -37,6 +37,14 @@ jobs:
         echo "Zip file contents:"
         unzip -l ../atr-simple-cookie-consent-banner.zip
         
+        # Verify the zip file was created
+        if [ ! -f "../atr-simple-cookie-consent-banner.zip" ]; then
+          echo "Error: Zip file was not created!"
+          exit 1
+        fi
+        
+        echo "Release package created successfully!"
+        
     - name: Upload release asset
       uses: actions/upload-release-asset@v1
       env:

@@ -1,0 +1,56 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Compiled binary addons (https://nodejs.org/api/addons.html)
+build/Release
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Output of `npm pack`
+*.tgz
+
+# Output of `wp-scripts plugin-zip`
+# *.zip
+
+# dotenv environment variables file
+.env
+.history/
+.vscode/
+/woocommerce-plugin
+
+vendor/
+dev-tools/vendor/
+# Ignore documentation output
+/docs/
+*.ps1
+
+# Ignore all zip files by default
+*.zip
+
+# Explicitly allow only the plugin zip file
+!atr-simple-cookie-consent-banner.zip
+
+# Ignore GitHub Actions and development files
+.github/
+CHANGELOG.md
+README.md
+privacy-policy.md
+package-plugin.ps1
+
+# Ignore this file itself (stop tracking via: git rm --cached .gitignore)
+.gitignore
+
