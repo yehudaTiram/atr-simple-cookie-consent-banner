@@ -44,13 +44,6 @@ dev-tools/vendor/
 # Explicitly allow only the plugin zip file
 !atr-simple-cookie-consent-banner.zip
 
-# Ignore GitHub Actions and development files
-.github/
-CHANGELOG.md
-README.md
-privacy-policy.md
-package-plugin.ps1
-
 # Ignore this file itself (stop tracking via: git rm --cached .gitignore)
 .gitignore
 
