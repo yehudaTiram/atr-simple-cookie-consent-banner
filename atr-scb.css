@@ -4,7 +4,24 @@
   inset: 0;
   background: rgba(0,0,0,0.35);
   z-index: 9998;
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#scb-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Special styling for privacy policy page - less intrusive */
+#scb-overlay.visible.privacy-page {
+  background: rgba(0,0,0,0.15);
+  pointer-events: none; /* Allow clicking through to content */
+}
+
+#scb-overlay.visible.privacy-page + #scb-banner {
+  pointer-events: auto; /* But keep banner interactive */
 }
 
 #scb-banner {
@@ -19,14 +36,119 @@
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   padding: 16px;
   color: #222;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
 }
 
-.scb-content { display:flex; flex-direction:column; gap:12px; }
-.scb-text { font-size:14px; line-height:1.4; }
-.scb-controls { display:flex; gap:8px; flex-wrap:wrap; }
-.scb-btn { padding:8px 12px; border-radius:6px; border:1px solid #ccc; background:#f7f7f7; cursor:pointer; }
-.scb-btn-primary { background:#0b74de; color:#fff; border-color:transparent; }
-.scb-settings { border-top:1px solid #eee; padding-top:10px; margin-top:6px; }
-.scb-more { font-size:12px; color:#666; }
-.scb-actions { margin-top:10px; display:flex; gap:8px; }
-@media (max-width:480px){ #scb-banner{ left:12px; right:12px; max-width:unset; } }
+#scb-banner.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scb-content { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px; 
+}
+
+.scb-text { 
+  font-size: 14px; 
+  line-height: 1.4; 
+}
+
+/* Privacy note styling */
+.scb-privacy-note {
+  background: #e8f4fd;
+  border: 1px solid #bee5eb;
+  border-radius: 6px;
+  padding: 8px 12px;
+  text-align: center;
+  color: #0c5460;
+  font-size: 12px;
+}
+
+.scb-controls { 
+  display: flex; 
+  gap: 8px; 
+  flex-wrap: wrap; 
+}
+
+.scb-btn { 
+  padding: 8px 12px; 
+  border-radius: 6px; 
+  border: 1px solid #ccc; 
+  background: #f7f7f7; 
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.scb-btn:hover {
+  background: #e9e9e9;
+  border-color: #999;
+}
+
+.scb-btn-primary { 
+  background: #0b74de; 
+  color: #fff; 
+  border-color: transparent; 
+}
+
+.scb-btn-primary:hover {
+  background: #0956a8;
+}
+
+.scb-settings { 
+  border-top: 1px solid #eee; 
+  padding-top: 10px; 
+  margin-top: 6px; 
+}
+
+.scb-more { 
+  font-size: 12px; 
+  color: #666; 
+}
+
+.scb-actions { 
+  margin-top: 10px; 
+  display: flex; 
+  gap: 8px; 
+}
+
+/* Mobile optimizations */
+@media (max-width: 480px) { 
+  #scb-banner { 
+    left: 12px; 
+    right: 12px; 
+    max-width: unset; 
+    bottom: 12px;
+    padding: 20px;
+  }
+  
+  .scb-controls {
+    flex-direction: column;
+  }
+  
+  .scb-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+  }
+}
+
+/* Prevent body scroll when banner is open (but not on privacy page) */
+body.scb-open {
+  overflow: hidden;
+}
+
+/* Loading state */
+#scb-banner.loading {
+  pointer-events: none;
+}
+
+#scb-banner.loading .scb-btn {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

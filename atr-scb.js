@@ -4,6 +4,11 @@
 (function () {
   const name = (window.scbSettings && scbSettings.cookieName) || "scb_consent";
   const expiryDays = (window.scbSettings && scbSettings.expiryDays) || 365;
+  const isPrivacyPage = (window.scbSettings && scbSettings.isPrivacyPage) || false;
+
+  // Prevent multiple initializations
+  if (window.scbInitialized) return;
+  window.scbInitialized = true;
 
   function saveConsent(obj) {
     try {
@@ -57,31 +62,86 @@
     });
   }
 
-  // On load: if consent exists, auto-activate
-  document.addEventListener("DOMContentLoaded", function () {
+  function showBanner() {
+    const banner = document.getElementById("scb-banner");
+    const overlay = document.getElementById("scb-overlay");
+    
+    if (banner && overlay) {
+      // On privacy policy page, don't block content completely
+      if (isPrivacyPage) {
+        overlay.classList.add('visible', 'privacy-page');
+        banner.classList.add('visible');
+      } else {
+        // Add body class to prevent scroll on other pages
+        document.body.classList.add('scb-open');
+        overlay.classList.add('visible');
+        banner.classList.add('visible');
+      }
+    }
+  }
+
+  function hideBanner() {
+    const banner = document.getElementById("scb-banner");
+    const overlay = document.getElementById("scb-overlay");
+    const settings = document.getElementById("scb-settings");
+    
+    if (banner && overlay) {
+      // Remove body class to restore scroll
+      document.body.classList.remove('scb-open');
+      
+      // Hide overlay and banner with smooth transitions
+      overlay.classList.remove('visible', 'privacy-page');
+      banner.classList.remove('visible');
+      
+      if (settings) settings.hidden = true;
+    }
+  }
+
+  function setLoadingState(loading) {
+    const banner = document.getElementById("scb-banner");
+    if (banner) {
+      if (loading) {
+        banner.classList.add('loading');
+      } else {
+        banner.classList.remove('loading');
+      }
+    }
+  }
+
+  // Initialize the banner
+  function initBanner() {
     const banner = document.getElementById("scb-banner");
     const overlay = document.getElementById("scb-overlay");
     const settings = document.getElementById("scb-settings");
     const form = document.getElementById("scb-form");
 
-    function hideBanner() {
-      if (banner) banner.style.display = "none";
-      if (overlay) overlay.style.display = "none";
-      if (settings) settings.hidden = true;
+    // Check if banner elements exist
+    if (!banner || !overlay) {
+      console.warn('Cookie consent banner elements not found');
+      return;
     }
 
     const stored = getConsent();
     if (stored) {
-      // activate consented categories
+      // User has already given consent - activate scripts and don't show banner
       if (stored.analytics) activateDataScripts("analytics");
       if (stored.marketing) activateDataScripts("marketing");
-      hideBanner();
       return;
     }
 
-    // no consent yet -> show banner
-    if (banner) banner.style.display = "block";
-    if (overlay) overlay.style.display = "block";
+    // On privacy policy page, show banner but don't block content
+    if (isPrivacyPage) {
+      // Add a note about temporary access
+      const privacyNote = document.createElement('div');
+      privacyNote.className = 'scb-privacy-note';
+      privacyNote.innerHTML = '<small>💡 You can read this page while deciding about cookies</small>';
+      banner.querySelector('.scb-content').insertBefore(privacyNote, banner.querySelector('.scb-text'));
+    }
+
+    // No consent yet - show banner after a short delay to prevent flash
+    setTimeout(() => {
+      showBanner();
+    }, 100);
 
     // controls
     const btnAcceptAll = document.getElementById("scb-btn-accept-all");
@@ -91,28 +151,42 @@
 
     btnAcceptAll &&
       btnAcceptAll.addEventListener("click", function () {
+        setLoadingState(true);
+        
         const c = {
           essential: true,
           analytics: true,
           marketing: true,
           ts: Date.now(),
         };
+        
         saveConsent(c);
         activateDataScripts("analytics");
         activateDataScripts("marketing");
-        hideBanner();
+        
+        setTimeout(() => {
+          hideBanner();
+          setLoadingState(false);
+        }, 300);
       });
 
     btnReject &&
       btnReject.addEventListener("click", function () {
+        setLoadingState(true);
+        
         const c = {
           essential: true,
           analytics: false,
           marketing: false,
           ts: Date.now(),
         };
+        
         saveConsent(c);
-        hideBanner();
+        
+        setTimeout(() => {
+          hideBanner();
+          setLoadingState(false);
+        }, 300);
       });
 
     btnCustom &&
@@ -130,6 +204,8 @@
     if (form) {
       form.addEventListener("submit", function (e) {
         e.preventDefault();
+        setLoadingState(true);
+        
         const formd = new FormData(form);
         const c = {
           essential: true,
@@ -141,13 +217,45 @@
             formd.get("marketing") === "true",
           ts: Date.now(),
         };
+        
         saveConsent(c);
         if (c.analytics) activateDataScripts("analytics");
         if (c.marketing) activateDataScripts("marketing");
-        hideBanner();
+        
+        setTimeout(() => {
+          hideBanner();
+          setLoadingState(false);
+        }, 300);
       });
     }
-  });
+
+    // Close banner when clicking outside (mobile-friendly)
+    overlay.addEventListener("click", function(e) {
+      if (e.target === overlay) {
+        hideBanner();
+      }
+    });
+
+    // Close banner with Escape key
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") {
+        hideBanner();
+      }
+    });
+  }
+
+  // Wait for DOM to be ready, but also check if elements are already there
+  function ready() {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initBanner);
+    } else {
+      // DOM is already ready
+      initBanner();
+    }
+  }
+
+  // Start initialization
+  ready();
 
   // expose for debugging / admin
   window.scb = {
@@ -155,5 +263,7 @@
     saveConsent,
     consentGivenFor,
     activateDataScripts,
+    showBanner,
+    hideBanner,
   };
 })();
