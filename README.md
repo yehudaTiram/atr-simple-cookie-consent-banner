@@ -2,10 +2,12 @@
 ## ניתן להוריד את הקובץ עם הגרסה האחרונה מ:
 https://atarimtr.co.il/wp-content/uploads/2025/08/atr-simple-cookie-consent-banner.zip
 
-##  Privacy Compliance Plugin for WordPress/WooCommerce
-
+--------------------
+###  Privacy Compliance Plugin for WordPress/WooCommerce
 **Note:**  
+
 This plugin is specifically designed to comply with privacy regulations in Israel (Privacy Protection Law Amendment 13). Therefore, all documentation and explanations are provided in Hebrew.
+--------------------
 <div dir="rtl">
 
   ## הבהרה: התוסף מתאים לכל אתר. המיקוד בווקומרס הוא בעיקר בגלל הצרכים המיוחדים של אתרי מסחר המתבטאים באיסוף נתונים הכרחי בכל רכישה באתר.
@@ -28,7 +30,7 @@ This plugin is specifically designed to comply with privacy regulations in Israe
 
 [https://atarimtr.co.il/איך-להתאים-אתר-ווקומרס-woocommerce-לתיקון-13-לחו/](https://atarimtr.co.il/איך-להתאים-אתר-ווקומרס-woocommerce-לתיקון-13-לחו/)
 
-לשאלות, תיעוד נוסף או סיוע, מוזמנים לפנות אלי (https://atarimtr.co.il/צרו-קשר/)[https://atarimtr.co.il/צרו-קשר/]
+לשאלות, תיעוד נוסף או סיוע, מוזמנים לפנות אלי [(https://atarimtr.co.il/צרו-קשר/)[https://atarimtr.co.il/צרו-קשר/]](https://atarimtr.co.il/%d7%a6%d7%a8%d7%95-%d7%a7%d7%a9%d7%a8/)
 
 ## הצהרת אחריות לשימוש בתוסף ולמדיניות הפרטיות
 
