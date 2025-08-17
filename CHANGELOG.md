@@ -2,6 +2,25 @@
 
 All notable changes to the ATR Simple Cookie Consent Banner plugin will be documented in this file.
 
+## [1.0.2] - 2024-01-15
+
+### 🐛 **Bug Fixes**
+- **Fixed Click-Outside-to-Close on Privacy Pages** - Users can now click outside the banner to close it on privacy policy pages
+- **Eliminated Banner Flash After Consent** - Banner no longer briefly appears on pages where consent has already been given
+- **Improved Consent Validation** - Better timing and validation to prevent unnecessary banner display
+
+### 🔧 **Improvements**
+- **Enhanced Privacy Page Detection** - More robust detection logic for privacy policy pages
+- **Better CSS Management** - Fixed pointer-events issues that were preventing interaction
+- **Improved Asset Versioning** - Added SCB_VERSION constant for consistent version management
+
+### 🛠️ **Developer Experience**
+- **Added Debug Capabilities** - Console logging for development and troubleshooting
+- **Enhanced Error Handling** - Better error prevention and debugging information
+- **Code Organization** - Cleaner initialization and consent checking logic
+
+---
+
 ## [1.0.1] - 2024-12-19
 
 ### 🆕 **New Features**
