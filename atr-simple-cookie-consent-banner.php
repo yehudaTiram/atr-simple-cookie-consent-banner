@@ -3,7 +3,7 @@
  * Plugin Name: ATR Simple Cookie Consent Banner for Israeli web sites
  * Description: Cookie consent banner specifically designed for Israeli websites to comply with the 13th amendment of the Privacy Protection Law (תיקון 13 לחוק הגנת הפרטיות). Handles Essential, Analytics, and Marketing cookies with proper consent management. Suitable for all Israeli businesses and websites. Use at your own risk - no warranty or liability for damages.
  * Plugin URI:        https://atarimtr.co.il
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Yehuda Tiram
  * Author URI:        https://atarimtr.co.il/
  * License:           GPL-2.0+
@@ -14,10 +14,13 @@
 
 if (!defined('ABSPATH')) exit;
 
+// Plugin version - update this when making changes
+define('SCB_VERSION', '1.0.2');
+
 /* --- enqueue assets --- */
 add_action('wp_enqueue_scripts', function () {
-  wp_register_style('scb-style', plugins_url('atr-scb.css', __FILE__), [], '1.0.1');
-  wp_register_script('scb-script', plugins_url('atr-scb.js', __FILE__), [], '1.0.1', true);
+  wp_register_style('scb-style', plugins_url('atr-scb.css', __FILE__), [], SCB_VERSION);
+  wp_register_script('scb-script', plugins_url('atr-scb.js', __FILE__), [], SCB_VERSION, true);
 
   wp_enqueue_style('scb-style');
   wp_enqueue_script('scb-script');
@@ -25,8 +28,19 @@ add_action('wp_enqueue_scripts', function () {
   // Check if we're on the privacy policy page
   $is_privacy_page = false;
   $privacy_policy_url = get_privacy_policy_url();
-  if ($privacy_policy_url && (is_page() || is_single()) && get_permalink() === $privacy_policy_url) {
-    $is_privacy_page = true;
+  
+  // More robust privacy page detection
+  if ($privacy_policy_url) {
+    $current_url = get_permalink();
+    $privacy_url_parts = parse_url($privacy_policy_url);
+    $current_url_parts = parse_url($current_url);
+    
+    // Check if current page matches privacy policy URL
+    if ($current_url === $privacy_policy_url || 
+        (isset($privacy_url_parts['path']) && isset($current_url_parts['path']) && 
+         $privacy_url_parts['path'] === $current_url_parts['path'])) {
+      $is_privacy_page = true;
+    }
   }
 
   // pass some settings to JS if needed

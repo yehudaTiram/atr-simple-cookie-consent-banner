@@ -17,11 +17,15 @@
 /* Special styling for privacy policy page - less intrusive */
 #scb-overlay.visible.privacy-page {
   background: rgba(0,0,0,0.15);
-  pointer-events: none; /* Allow clicking through to content */
 }
 
 #scb-overlay.visible.privacy-page + #scb-banner {
-  pointer-events: auto; /* But keep banner interactive */
+  pointer-events: auto; /* Keep banner interactive */
+}
+
+/* Ensure overlay is always clickable for all pages */
+#scb-overlay.visible {
+  pointer-events: auto;
 }
 
 #scb-banner {

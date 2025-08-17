@@ -30,6 +30,8 @@ node_modules/
 .env
 .history/
 .vscode/
+# GitHub Actions and workflows
+.github/
 /woocommerce-plugin
 
 vendor/
@@ -46,4 +48,10 @@ dev-tools/vendor/
 
 # Ignore this file itself (stop tracking via: git rm --cached .gitignore)
 .gitignore
+
+# Ignore old version files
+atr-simple-cookie-consent-banner-1.0.1-EN.php
+
+# Ignore debug and test files
+debug-privacy-page.html
 
