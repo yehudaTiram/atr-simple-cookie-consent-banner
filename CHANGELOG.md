@@ -2,7 +2,7 @@
 
 All notable changes to the ATR Simple Cookie Consent Banner plugin will be documented in this file.
 
-## [1.0.2] - 2024-01-15
+## [1.0.2] - 2025-08-17
 
 ### 🐛 **Bug Fixes**
 - **Fixed Click-Outside-to-Close on Privacy Pages** - Users can now click outside the banner to close it on privacy policy pages
@@ -21,7 +21,7 @@ All notable changes to the ATR Simple Cookie Consent Banner plugin will be docum
 
 ---
 
-## [1.0.1] - 2024-12-19
+## [1.0.1] - 2025-08-15
 
 ### 🆕 **New Features**
 - **Privacy Policy Page Access** - Users can now read privacy policy pages without being blocked by the consent banner
