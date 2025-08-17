@@ -1,5 +1,5 @@
 # תוסף תאימות פרטיות לוורדפרס ו-WooCommerce
-## נא לשים לב: התוסף עושה עבודה חלקית בשלב זה והפיתוח שלו נמצא בעבודה!
+## נא לשים לב: התוסף עושה עבודה חלקית בשלב זה ונמצא עדיין תחת פיתוח!
 ## ניתן להוריד את הקובץ עם הגרסה האחרונה מ:
 [https://atarimtr.co.il/wp-content/uploads/2025/06/atr-simple-cookie-consent-banner.zip](https://atarimtr.co.il/wp-content/uploads/2025/06/atr-simple-cookie-consent-banner.zip)
 
