@@ -1,0 +1,245 @@
+# Hebrew (Israel) translation for ATR Simple Cookie Consent Banner
+# Copyright (C) 2025 Yehuda Tiram
+# This file is distributed under the same license as the ATR Simple Cookie Consent Banner package.
+msgid ""
+msgstr ""
+"Project-Id-Version: ATR Simple Cookie Consent Banner 2.0.0\n"
+"Report-Msgid-Bugs-To: https://atarimtr.co.il/\n"
+"POT-Creation-Date: 2025-08-23 14:45+0300\n"
+"PO-Revision-Date: 2025-08-23 16:54+0300\n"
+"Last-Translator: Yehuda Tiram <yehuda@atarimtr.co.il>\n"
+"Language-Team: \n"
+"Language: he_IL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.5\n"
+
+msgid "Testing Guide"
+msgstr "מדריך בדיקה"
+
+msgid "Settings"
+msgstr "הגדרות"
+
+msgid "I have read and agree to the"
+msgstr "קראתי ואני מסכים ל"
+
+msgid "Privacy Policy"
+msgstr "מדיניות הפרטיות"
+
+msgid "You must accept the privacy policy before submitting the form."
+msgstr "עליך לקבל את מדיניות הפרטיות לפני שליחת הטופס."
+
+msgid "You must accept the privacy policy before placing the order."
+msgstr "עליך לקבל את מדיניות הפרטיות לפני ביצוע ההזמנה."
+
+msgid "Privacy Policy Acceptance:"
+msgstr "הסכמה למדיניות פרטיות:"
+
+msgid "Yes"
+msgstr "כן"
+
+msgid "💡 You can read this page while deciding about cookies"
+msgstr "💡 אפשר לקרוא את העמוד הזה תוך כדי החלטה על עוגיות"
+
+msgid "We use cookies to ensure the website functions properly and improve user experience. You can choose which types of cookies to enable."
+msgstr "משתמשים בעוגיות כדי להבטיח תפקוד האתר ולשפר את חוויית המשתמש. אפשר לבחור אילו סוגי עוגיות להפעיל."
+
+msgid "Accept All"
+msgstr "קבל הכל"
+
+msgid "Loading..."
+msgstr "טוען..."
+
+msgid "Reject Non-Essential"
+msgstr "הסר לא הכרחיות"
+
+msgid "Preferences"
+msgstr "העדפות"
+
+msgid "Cookie Selection"
+msgstr "בחירת עוגיות"
+
+msgid "Essential (Required)"
+msgstr "הכרחיות (נדרשות)"
+
+msgid "Analytics (Google Analytics)"
+msgstr "אנליטיקה (Google Analytics)"
+
+msgid "Marketing/Advertising (Facebook/Ads)"
+msgstr "שיווק/פרסום (Facebook/Ads)"
+
+msgid "Save Choices"
+msgstr "שמור את הבחירה"
+
+msgid "Cancel"
+msgstr "בטל"
+
+msgid "ATR Cookie Consent Banner Options"
+msgstr "אפשרויות באנר הסכמה לעוגיות ATR"
+
+msgid "Cookie Consent Banner"
+msgstr "באנר הסכמה לעוגיות"
+
+msgid "ATR Cookie Consent Banner"
+msgstr "באנר הסכמה לעוגיות ATR"
+
+msgid "ATR Cookie Consent Banner Docs"
+msgstr "תיעוד באנר הסכמה לעוגיות ATR"
+
+msgid "Docs (ATR Cookie Banner)"
+msgstr "תיעוד (באנר עוגיות ATR)"
+
+msgid "Cookie Consent Banner Testing Guide"
+msgstr "מדריך בדיקה לבאנר הסכמה לעוגיות"
+
+msgid "Cookie Consent Banner Options"
+msgstr "אפשרויות באנר הסכמה לעוגיות"
+
+msgid "Documentation"
+msgstr "תיעוד"
+
+msgid "Docs"
+msgstr "תיעוד"
+
+msgid "README not found."
+msgstr "קובץ README לא נמצא."
+
+msgid "Testing Guide not found."
+msgstr "מדריך הבדיקה לא נמצא."
+
+msgid "General Settings"
+msgstr "הגדרות כלליות"
+
+msgid "Configure the basic behavior of the cookie consent banner."
+msgstr "הגדר את ההתנהגות הבסיסית של באנר הסכמת העוגיות."
+
+msgid "Enable Cookie Banner"
+msgstr "הפעל באנר עוגיות"
+
+msgid "Show the cookie consent banner to visitors."
+msgstr "הצג את באנר הסכמת העוגיות למבקרים."
+
+msgid "Banner Position"
+msgstr "מיקום הבאנר"
+
+msgid "Choose where the banner appears on the page."
+msgstr "בחר איפה הבאנר יופיע בעמוד."
+
+msgid "Bottom"
+msgstr "תחתית"
+
+msgid "Top"
+msgstr "עליון"
+
+msgid "Overlay (Center)"
+msgstr "שכבה (מרכז)"
+
+msgid "Auto-hide Delay (seconds)"
+msgstr "עיכוב הסתרה אוטומטית (שניות)"
+
+msgid "Automatically hide the banner after this many seconds (0 = no auto-hide)."
+msgstr "הסתר את הבאנר אוטומטית אחרי מספר שניות זה (0 = ללא הסתרה אוטומטית)."
+
+msgid "Cookie Categories"
+msgstr "קטגוריות עוגיות"
+
+msgid "Configure which cookie categories to show and their default states."
+msgstr "הגדר אילו קטגוריות עוגיות להציג ומצבן ברירת המחדל."
+
+msgid "Show Analytics Cookies"
+msgstr "הצג עוגיות אנליטיקה"
+
+msgid "Display the analytics cookies option in the banner."
+msgstr "הצג את אפשרות עוגיות האנליטיקה בבאנר."
+
+msgid "Show Marketing Cookies"
+msgstr "הצג עוגיות שיווק"
+
+msgid "Display the marketing cookies option in the banner."
+msgstr "הצג את אפשרות עוגיות השיווק בבאנר."
+
+msgid "Analytics Cookies Default"
+msgstr "ברירת מחדל לעוגיות אנליטיקה"
+
+msgid "Default state for analytics cookies (checked = enabled by default)."
+msgstr "מצב ברירת מחדל לעוגיות אנליטיקה (מסומן = מופעל כברירת מחדל)."
+
+msgid "Marketing Cookies Default"
+msgstr "ברירת מחדל לעוגיות שיווק"
+
+msgid "Default state for marketing cookies (checked = enabled by default)."
+msgstr "מצב ברירת מחדל לעוגיות שיווק (מסומן = מופעל כברירת מחדל)."
+
+msgid "Styling & Appearance"
+msgstr "עיצוב ומראה"
+
+msgid "Customize the appearance of the cookie consent banner."
+msgstr "התאם אישית את המראה של באנר הסכמת העוגיות."
+
+msgid "Primary Color"
+msgstr "צבע ראשי"
+
+msgid "Main color for buttons and highlights (hex code)."
+msgstr "צבע ראשי לכפתורים והדגשות (קוד hex)."
+
+msgid "Text Color"
+msgstr "צבע טקסט"
+
+msgid "Color for text content (hex code)."
+msgstr "צבע לתוכן הטקסט (קוד hex)."
+
+msgid "Background Color"
+msgstr "צבע רקע"
+
+msgid "Background color for the banner (hex code)."
+msgstr "צבע הרקע של הבאנר (קוד hex)."
+
+msgid "Custom CSS"
+msgstr "CSS מותאם אישית"
+
+msgid "Additional CSS rules to customize the banner appearance."
+msgstr "כללי CSS נוספים להתאמה אישית של מראה הבאנר."
+
+msgid "Advanced Options"
+msgstr "אפשרויות מתקדמות"
+
+msgid "Advanced configuration options for developers."
+msgstr "אפשרויות הגדרה מתקדמות למפתחים."
+
+msgid "Enable Debug Mode"
+msgstr "הפעל מצב דיבאג"
+
+msgid "Show debug information in browser console (for development only)."
+msgstr "הצג מידע דיבאג בקונסול הדפדפן (לפיתוח בלבד)."
+
+msgid "Cookie Expiry (days)"
+msgstr "תוקף עוגיות (ימים)"
+
+msgid "How long to remember user consent (in days)."
+msgstr "כמה זמן לזכור את הסכמת המשתמש (בימים)."
+
+msgid "WooCommerce Integration"
+msgstr "אינטגרציה עם WooCommerce"
+
+msgid "Add privacy policy checkbox to WooCommerce checkout (requires WooCommerce)."
+msgstr "הוסף תיבת סימון מדיניות פרטיות לתהליך התשלום של WooCommerce (נדרש WooCommerce)."
+
+msgid "Primary color must be a valid hex color code (e.g., #0073aa)."
+msgstr "צבע ראשי חייב להיות קוד צבע hex תקין (למשל, #0073aa)."
+
+msgid "Text color must be a valid hex color code (e.g., #333333)."
+msgstr "צבע טקסט חייב להיות קוד צבע hex תקין (למשל, #333333)."
+
+msgid "Background color must be a valid hex color code (e.g., #ffffff)."
+msgstr "צבע רקע חייב להיות קוד צבע hex תקין (למשל, #ffffff)."
+
+msgid "Global Form Integration"
+msgstr "אינטגרציה גלובלית של טפסים"
+
+msgid "Add privacy policy checkbox to all forms on the website (contact forms, comment forms, etc.)."
+msgstr "הוסף תיבת סימון מדיניות פרטיות לכל הטפסים באתר (טפסי יצירת קשר, טפסי תגובות וכו')."
+
+msgid "You must accept the privacy policy before posting a comment."
+msgstr "עליך לקבל את מדיניות הפרטיות לפני פרסום תגובה."

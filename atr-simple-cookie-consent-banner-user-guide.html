@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מדריך משתמש - באנר הסכמה לעוגיות ATR</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #34495e;
+            border-right: 4px solid #3498db;
+            padding-right: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 25px;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            border-right: 4px solid #f39c12;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            border-right: 4px solid #17a2b8;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            border-right: 4px solid #28a745;
+        }
+        .code {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            text-align: left;
+        }
+        .step {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            border-right: 4px solid #6c757d;
+        }
+        .step-number {
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        ul, ol {
+            padding-right: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .download-link {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .download-link:hover {
+            background-color: #218838;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .table th, .table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: right;
+        }
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>מדריך משתמש - באנר הסכמה לעוגיות ATR</h1>
+        
+        <div class="warning">
+            <h3>⚠️ אזהרה חשובה - אין ייעוץ משפטי</h3>
+            <p><strong>התוסף הזה אינו מספק ייעוץ משפטי כלשהו.</strong></p>
+            <p>התוסף לא מתחייב לפתור את החובה לחוק הפרטיות או כל חוק אחר. החובה לבדוק התאמה לחוקים מוטלת על המשתמש בלבד.</p>
+            <p>התוסף לא מתחייב לעמוד בהגדרות הנגישות (למרות שניסינו לעמוד בהן). על בעל האתר מוטלת החובה לוודא שהאתר עומד בדרישות הנגישות.</p>
+            <p><strong>אין שום אחריות על התוסף והוא מוגש AS IS.</strong> מי שלא מעוניין - שלא ישתמש בו.</p>
+        </div>
+
+        <h2>📥 התקנת התוסף</h2>
+        
+        <div class="info">
+            <h3>קובץ ההתקנה</h3>
+            <p>התוסף מגיע כקובץ ZIP. לחץ על הקישור הבא להורדה:</p>
+            <a href="#" class="download-link">📦 הורדת התוסף (ZIP)</a>
+            <p><em>הערה: הקישור יועלה בקרוב. בינתיים השתמש בקובץ ZIP שקיבלת.</em></p>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">1</span>התקנה דרך WordPress</h3>
+            <ol>
+                <li>היכנס לפאנל הניהול של WordPress</li>
+                <li>לך ל<strong>תוספים</strong> → <strong>הוסף חדש</strong></li>
+                <li>לחץ על <strong>העלה תוסף</strong> (בצד שמאל למעלה)</li>
+                <li>לחץ על <strong>בחר קובץ</strong> ובחר את קובץ ה-ZIP שהורדת</li>
+                <li>לחץ על <strong>התקן כעת</strong></li>
+                <li>לאחר ההתקנה, לחץ על <strong>הפעל תוסף</strong></li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">2</span>התקנה ידנית (אם ההתקנה האוטומטית נכשלה)</h3>
+            <ol>
+                <li>חלץ את קובץ ה-ZIP למחשב שלך</li>
+                <li>העלה את התיקייה <code>atr-simple-cookie-consent-banner</code> לתיקיית <code>wp-content/plugins/</code> באתר שלך</li>
+                <li>היכנס לפאנל הניהול של WordPress</li>
+                <li>לך ל<strong>תוספים</strong> → <strong>תוספים מותקנים</strong></li>
+                <li>חפש את "ATR Simple Cookie Consent Banner" ולחץ על <strong>הפעל</strong></li>
+            </ol>
+        </div>
+
+        <h2>⚙️ הגדרות התוסף</h2>
+        
+        <p>לאחר הפעלת התוסף, תוכל למצוא את ההגדרות ב:</p>
+        <div class="code">
+            <strong>WordPress Admin</strong> → <strong>ATR Cookie Banner</strong> → <strong>הגדרות</strong>
+        </div>
+
+        <h3>אפשרויות ההגדרה</h3>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>אפשרות</th>
+                    <th>תיאור</th>
+                    <th>ברירת מחדל</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>טקסט כותרת</strong></td>
+                    <td>הכותרת שמופיעה בבאנר העוגיות</td>
+                    <td>"אנחנו משתמשים בעוגיות"</td>
+                </tr>
+                <tr>
+                    <td><strong>טקסט תיאור</strong></td>
+                    <td>הטקסט המסביר למה אנחנו משתמשים בעוגיות</td>
+                    <td>טקסט הסבר מפורט</td>
+                </tr>
+                <tr>
+                    <td><strong>טקסט כפתור "קבל הכל"</strong></td>
+                    <td>הטקסט על כפתור קבלת כל העוגיות</td>
+                    <td>"קבל הכל"</td>
+                </tr>
+                <tr>
+                    <td><strong>טקסט כפתור "דחה"</strong></td>
+                    <td>הטקסט על כפתור דחיית עוגיות לא חיוניות</td>
+                    <td>"דחה"</td>
+                </tr>
+                <tr>
+                    <td><strong>טקסט כפתור "העדפות"</strong></td>
+                    <td>הטקסט על כפתור פתיחת הגדרות מותאמות אישית</td>
+                    <td>"העדפות"</td>
+                </tr>
+                <tr>
+                    <td><strong>אינטגרציה גלובלית לטפסים</strong></td>
+                    <td>הוספת צ'קבוקס הסכמה לכל הטפסים באתר</td>
+                    <td>מופעל</td>
+                </tr>
+                <tr>
+                    <td><strong>קישור מדיניות פרטיות</strong></td>
+                    <td>הקישור לדף מדיניות הפרטיות</td>
+                    <td>דף מדיניות פרטיות</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🧹 ניקוי Cache</h2>
+        
+        <div class="warning">
+            <p><strong>חשוב!</strong> לאחר התקנת התוסף, עליך לנקות את ה-Cache של האתר שלך.</p>
+        </div>
+
+        <h3>איך לנקות Cache</h3>
+        
+        <div class="step">
+            <h4>אם יש לך תוסף Cache (כמו WP Rocket, W3 Total Cache):</h4>
+            <ol>
+                <li>היכנס לפאנל הניהול</li>
+                <li>חפש את תפריט התוסף (בדרך כלל בצד שמאל)</li>
+                <li>לחץ על <strong>נקה Cache</strong> או <strong>Clear Cache</strong></li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h4>אם אין לך תוסף Cache:</h4>
+            <ol>
+                <li>נקה את ה-Cache של הדפדפן (Ctrl+F5 או Cmd+Shift+R)</li>
+                <li>נקה את ה-Cache של השרת (אם יש לך גישה)</li>
+            </ol>
+        </div>
+
+        <h2>🌐 בדיקה במצב אינקוגניטו</h2>
+        
+        <div class="info">
+            <h3>מה זה מצב אינקוגניטו?</h3>
+            <p>מצב אינקוגניטו הוא מצב בדפדפן שבו הדפדפן לא שומר היסטוריה, עוגיות או נתונים אחרים. זה מאפשר לבדוק את האתר כאילו זו הפעם הראשונה שאתה מבקר בו.</p>
+        </div>
+
+        <h3>איך לפתוח מצב אינקוגניטו</h3>
+        
+        <div class="step">
+            <h4>Chrome/Edge:</h4>
+            <ol>
+                <li>לחץ על שלוש הנקודות בצד שמאל למעלה</li>
+                <li>בחר <strong>חלון חדש בסתר</strong> או <strong>New incognito window</strong></li>
+                <li>או השתמש בקיצור המקלדת: <strong>Ctrl+Shift+N</strong></li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h4>Firefox:</h4>
+            <ol>
+                <li>לחץ על שלוש הקווים בצד שמאל למעלה</li>
+                <li>בחר <strong>חלון פרטי חדש</strong> או <strong>New Private Window</strong></li>
+                <li>או השתמש בקיצור המקלדת: <strong>Ctrl+Shift+P</strong></li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h4>Safari:</h4>
+            <ol>
+                <li>לחץ על <strong>קובץ</strong> בתפריט העליון</li>
+                <li>בחר <strong>חלון פרטי חדש</strong> או <strong>New Private Window</strong></li>
+                <li>או השתמש בקיצור המקלדת: <strong>Cmd+Shift+N</strong></li>
+            </ol>
+        </div>
+
+        <h2>🎨 בעיות עיצוב אפשריות</h2>
+        
+        <div class="warning">
+            <p><strong>שים לב!</strong> ייתכן שבגלל הגדרות עיצוב באתר שלך, חלק מהטקסטים או הקישורים יופיעו באופן שלא יראו אותם.</p>
+        </div>
+
+        <h3>דוגמאות לבעיות נפוצות:</h3>
+        <ul>
+            <li><strong>טקסט שחור על רקע שחור</strong> - לא יראה</li>
+            <li><strong>טקסט לבן על רקע לבן</strong> - לא יראה</li>
+            <li><strong>קישורים בצבע דומה לרקע</strong> - לא יראו</li>
+            <li><strong>גודל טקסט קטן מדי</strong> - קשה לקריאה</li>
+        </ul>
+
+        <h3>מה לעשות:</h3>
+        <ol>
+            <li>בדוק את הבאנר במצב אינקוגניטו</li>
+            <li>אם יש בעיות עיצוב, עדכן את ה-CSS של האתר שלך</li>
+            <li>או צור קשר עם מפתח האתר שלך לתיקון הבעיות</li>
+        </ol>
+
+        <h2>🌍 תמיכה בשפות</h2>
+        
+        <div class="info">
+            <p>התוסף מותאם לריבוי שפות לפי הסטנדרט של WordPress.</p>
+        </div>
+
+        <h3>הוספת תרגומים:</h3>
+        <ol>
+            <li>צור תרגום לשפה הרצויה</li>
+            <li>השתמש בכלי Poedit או כלי דומה</li>
+            <li>שמור את הקבצים בפורמט .po ו-.mo</li>
+            <li>העלה אותם לתיקיית <code>languages</code> של התוסף</li>
+        </ol>
+
+        <div class="success">
+            <p><strong>חשוב!</strong> אם יצרת תרגום, אנא העבר אותו אלי כדי שגם אחרים ייהנו ממנו.</p>
+        </div>
+
+        <h2>🧪 בדיקת התוסף</h2>
+        
+        <h3>למה לבדוק?</h3>
+        <p>הבדיקות חשובות כדי לוודא שהתוסף עובד כמו שצריך ושהעוגיות נחסמות כראוי לפני קבלת הסכמה.</p>
+
+        <h3>איך לבדוק:</h3>
+        
+        <div class="step">
+            <h4>בדיקה בסיסית:</h4>
+            <ol>
+                <li>פתח את האתר במצב אינקוגניטו</li>
+                <li>וודא שהבאנר מופיע</li>
+                <li>לחץ על "קבל הכל"</li>
+                <li>וודא שהבאנר נעלם</li>
+                <li>רענן את הדף - הבאנר לא אמור להופיע שוב</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h4>בדיקה מתקדמת:</h4>
+            <ol>
+                <li>פתח את כלי המפתח (F12)</li>
+                <li>לך לטאב Console</li>
+                <li>הקלד: <code>window.scb.testTracking()</code></li>
+                <li>בדוק שהפונקציות נחסמות לפני הסכמה</li>
+                <li>בדוק שהפונקציות עובדות אחרי הסכמה</li>
+            </ol>
+        </div>
+
+        <h2>🔒 איך התוסף חוסם עוגיות</h2>
+        
+        <h3>טכניקות החסימה:</h3>
+        
+        <div class="info">
+            <h4>חסימת פונקציות:</h4>
+            <p>התוסף חוסם פונקציות כמו:</p>
+            <ul>
+                <li><strong>Google Analytics (gtag, ga)</strong></li>
+                <li><strong>Facebook Pixel (fbq)</strong></li>
+                <li><strong>Google Tag Manager (dataLayer)</strong></li>
+            </ul>
+        </div>
+
+        <h3>מה קורה אם החסימה לא מצליחה:</h3>
+        <ul>
+            <li>התוסף מנסה שוב לחסום את הפונקציות</li>
+            <li>אם זה לא עובד, הפונקציות עלולות לעבוד לפני קבלת הסכמה</li>
+            <li>זה עלול לגרום לבעיות פרטיות</li>
+        </ul>
+
+        <h2>⏱️ למה צריך לחכות</h2>
+        
+        <div class="info">
+            <p>התוסף צריך לפעמים לחכות כמה שניות שהקוד של העוגיות ירוץ לפני שהוא יכול לחסום אותו.</p>
+        </div>
+
+        <h3>דוגמאות:</h3>
+        <ul>
+            <li><strong>Google Tag Manager (GTM)</strong> - יכול לקחת 2-3 שניות לטעון</li>
+            <li><strong>Google Analytics</strong> - לפעמים נטען מאוחר יותר</li>
+            <li><strong>Facebook Pixel</strong> - יכול להיות מושהי</li>
+        </ul>
+
+        <h3>מה זה אומר:</h3>
+        <ul>
+            <li>בהתחלה אין חסימה מלאה</li>
+            <li>אחרי כמה שניות החסימה מתחילה לעבוד</li>
+            <li>זה נורמלי ולא אומר שהתוסף לא עובד</li>
+        </ul>
+
+        <h2>📝 צ'קבוקס לטפסים</h2>
+        
+        <div class="info">
+            <p>התוסף מוסיף צ'קבוקס הסכמה לכל הטפסים באתר, כולל תיבת החיפוש.</p>
+        </div>
+
+        <h3>איך זה עובד:</h3>
+        <ul>
+            <li>התוסף מזהה אוטומטית טפסים באתר</li>
+            <li>מוסיף צ'קבוקס "קראתי ואני מסכים למדיניות הפרטיות"</li>
+            <li>הטפסים לא יעבדו בלי סימון הצ'קבוקס</li>
+        </ul>
+
+        <h3>טפסים שכוסים:</h3>
+        <ul>
+            <li>טפסי יצירת קשר</li>
+            <li>טפסי תגובות</li>
+            <li>טפסי הרשמה לניוזלטר</li>
+            <li>טפסי הזמנות</li>
+            <li><strong>תיבת חיפוש</strong> (כי היא בעצם טופס)</li>
+            <li>טפסים של תוספים כמו Contact Form 7, Gravity Forms</li>
+        </ul>
+
+        <h3>הערות חשובות:</h3>
+        <ul>
+            <li>הצ'קבוקס מופיע אוטומטית - אין צורך להגדיר כלום</li>
+            <li>אם אתה לא רוצה צ'קבוקס על טופס מסוים, צור קשר איתי</li>
+            <li>הטקסט של הצ'קבוקס ניתן לשינוי בהגדרות</li>
+        </ul>
+
+        <h2>❓ שאלות נפוצות</h2>
+        
+        <h3>הבאנר לא מופיע:</h3>
+        <ul>
+            <li>נקה את ה-Cache של האתר</li>
+            <li>בדוק שהתוסף מופעל</li>
+            <li>נקה את העוגיות של הדפדפן</li>
+        </ul>
+
+        <h3>הבאנר מופיע גם אחרי הסכמה:</h3>
+        <ul>
+            <li>נקה את ה-Cache</li>
+            <li>בדוק שהסכמה נשמרה</li>
+            <li>נסה במצב אינקוגניטו</li>
+        </ul>
+
+        <h3>העוגיות עדיין עובדות:</h3>
+        <ul>
+            <li>חכה כמה שניות - החסימה מתחילה לעבוד בהשהיה</li>
+            <li>בדוק שהסכמה ניתנה</li>
+            <li>נקה את ה-Cache</li>
+        </ul>
+
+        <h2>📞 תמיכה</h2>
+        
+        <div class="info">
+            <p>אם יש לך בעיות או שאלות:</p>
+            <ul>
+                <li>בדוק את המדריך הזה</li>
+                <li>נסה את הבדיקות המוצעות</li>
+                <li>צור קשר איתי עם פרטי הבעיה</li>
+            </ul>
+        </div>
+
+        <h3>מה לכלול בבקשת התמיכה:</h3>
+        <ul>
+            <li>תיאור הבעיה</li>
+            <li>איזה דפדפן אתה משתמש</li>
+            <li>איזה תוספים יש לך באתר</li>
+            <li>האם הבעיה קיימת במצב אינקוגניטו</li>
+            <li>הודעות שגיאה (אם יש)</li>
+        </ul>
+
+        <hr style="margin: 40px 0; border: none; border-top: 2px solid #eee;">
+
+        <div class="success">
+            <p><strong>תודה שהשתמשת בתוסף שלנו!</strong></p>
+            <p>אם התוסף עזר לך, אנא שקול לתת לו דירוג חיובי או להמליץ עליו לאחרים.</p>
+        </div>
+
+        <p style="text-align: center; color: #666; margin-top: 30px;">
+            <em>גרסה: 2.0.0 | עודכן לאחרונה: דצמבר 2024</em>
+        </p>
+    </div>
+</body>
+</html>

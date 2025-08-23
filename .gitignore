@@ -1,57 +1,167 @@
-# Logs
-logs
+# WordPress Plugin Development
+# =============================
+
+# Plugin build artifacts
+*.zip
+!atr-simple-cookie-consent-banner.zip
+
+# WordPress specific
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/upgrade/
+wp-content/mu-plugins/
+wp-content/wp-cache-config.php
+
+# Development and IDE files
+.vscode/
+.history/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and debugging
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+debug-*.html
+debug-*.php
 
-# Coverage directory used by tools like istanbul
-coverage
-
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
-
-# Dependency directories
+# Node.js dependencies (if using build tools)
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
-
-# Output of `npm pack`
-*.tgz
-
-# Output of `wp-scripts plugin-zip`
-# *.zip
-
-# dotenv environment variables file
-.env
-.history/
-.vscode/
-# GitHub Actions and workflows
-.github/
-/woocommerce-plugin
-
+# Build tools
 vendor/
-dev-tools/vendor/
-# Ignore documentation output
-/docs/
-*.ps1
+composer.lock
+package-lock.json
+yarn.lock
 
-# Ignore all zip files by default
-*.zip
+# Coverage and testing
+coverage/
+.nyc_output/
+.phpunit.result.cache
 
-# Explicitly allow only the plugin zip file
-!atr-simple-cookie-consent-banner.zip
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Ignore this file itself (stop tracking via: git rm --cached .gitignore)
-.gitignore
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
 
-# Ignore old version files
+# Old version files
 atr-simple-cookie-consent-banner-1.0.1-EN.php
 
-# Ignore debug and test files
-debug-privacy-page.html
+# PowerShell scripts (development tools)
+*.ps1
+
+# Documentation build output
+/docs/
+
+# GitHub Actions (keep workflows but ignore cache)
+.github/cache/
+
+# Explicitly ignore this file itself
+.gitignore
+
+# WordPress Plugin Boilerplate specific
+# =====================================
+
+# Admin build files (if using build tools)
+admin/css/*.min.css
+admin/js/*.min.js
+
+# Public build files (if using build tools)
+public/css/*.min.css
+public/js/*.min.js
+
+# Language compiled files
+languages/*.mo
+languages/*.po~
+
+# Development database dumps
+*.sql
+*.sql.gz
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# WordPress Plugin Development
+# Build artifacts and dependencies
+node_modules/
+vendor/
+build/
+dist/
+*.zip
+
+# Development tools and configs
+webpack.config.js
+package.json
+package-lock.json
+composer.json
+composer.lock
+*.map
+
+# Testing and quality assurance
+tests/
+phpunit.xml
+phpcs.xml
+.phpcs.xml
+.php-cs-fixer.php
+.eslintignore
+.eslintrc
+.stylelintignore
+.stylelintrc
+.babelrc
+
+# Logs and temporary files
+*.log
+*.bak
+*.tmp
+*.swp
+
+# Environment and editor files
+.env
+.editorconfig
+.github/
+.vscode/
+.history/
+
+# PowerShell scripts
+*.ps1
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Keep language files for version control
+# languages/*.po
+# languages/*.pot
+# languages/*.mo
 

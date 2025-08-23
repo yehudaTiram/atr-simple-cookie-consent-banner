@@ -1,0 +1,82 @@
+/**
+ * Admin styles for ATR Simple Cookie Consent Banner
+ *
+ * @package ATR_Simple_Cookie_Consent_Banner
+ * @since    1.0.0
+ */
+
+.atr-scb-admin-notice {
+    background: #fff;
+    border-left: 4px solid #0073aa;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    margin: 5px 0 15px;
+    padding: 1px 12px;
+}
+
+.atr-scb-admin-notice p {
+    margin: .5em 0;
+    padding: 2px;
+}
+
+.atr-scb-admin-header {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.atr-scb-admin-header h2 {
+    margin-top: 0;
+    color: #23282d;
+}
+
+.atr-scb-admin-content {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.atr-scb-admin-content h3 {
+    margin-top: 0;
+    color: #23282d;
+}
+
+.atr-scb-admin-content .form-table th {
+    width: 200px;
+}
+
+.atr-scb-admin-content .form-table td {
+    padding: 15px 10px;
+}
+
+.atr-scb-admin-content .form-table input[type="text"],
+.atr-scb-admin-content .form-table textarea {
+    width: 100%;
+    max-width: 400px;
+}
+
+.atr-scb-admin-content .form-table textarea {
+    height: 100px;
+}
+
+.atr-scb-admin-footer {
+    background: #f9f9f9;
+    border: 1px solid #ccd0d4;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #666;
+}
+
+.atr-scb-admin-footer a {
+    color: #0073aa;
+    text-decoration: none;
+}
+
+.atr-scb-admin-footer a:hover {
+    text-decoration: underline;
+}

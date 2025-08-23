@@ -1,184 +1,340 @@
 <?php
-/*
+/**
  * Plugin Name: ATR Simple Cookie Consent Banner for Israeli web sites
  * Description: Cookie consent banner specifically designed for Israeli websites to comply with the 13th amendment of the Privacy Protection Law (תיקון 13 לחוק הגנת הפרטיות). Handles Essential, Analytics, and Marketing cookies with proper consent management. Suitable for all Israeli businesses and websites. Use at your own risk - no warranty or liability for damages.
  * Plugin URI:        https://atarimtr.co.il
- * Version:           1.0.2
+ * Version:           2.0.0
  * Author:            Yehuda Tiram
  * Author URI:        https://atarimtr.co.il/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       atr-simple-cookie-consent-banner
  * Domain Path:       /languages
+ * Requires at least: 5.0
+ * Tested up to:      6.4
+ * Requires PHP:      7.4
+ *
+ * @package ATR_Simple_Cookie_Consent_Banner
  */
 
-if (!defined('ABSPATH')) exit;
-
-// Plugin version - update this when making changes
-define('SCB_VERSION', '1.0.2');
-
-/* --- enqueue assets --- */
-add_action('wp_enqueue_scripts', function () {
-  wp_register_style('scb-style', plugins_url('atr-scb.css', __FILE__), [], SCB_VERSION);
-  wp_register_script('scb-script', plugins_url('atr-scb.js', __FILE__), [], SCB_VERSION, true);
-
-  wp_enqueue_style('scb-style');
-  wp_enqueue_script('scb-script');
-
-  // Check if we're on the privacy policy page
-  $is_privacy_page = false;
-  $privacy_policy_url = get_privacy_policy_url();
-  
-  // More robust privacy page detection
-  if ($privacy_policy_url) {
-    $current_url = get_permalink();
-    $privacy_url_parts = parse_url($privacy_policy_url);
-    $current_url_parts = parse_url($current_url);
-    
-    // Check if current page matches privacy policy URL
-    if ($current_url === $privacy_policy_url || 
-        (isset($privacy_url_parts['path']) && isset($current_url_parts['path']) && 
-         $privacy_url_parts['path'] === $current_url_parts['path'])) {
-      $is_privacy_page = true;
-    }
-  }
-
-  // pass some settings to JS if needed
-  wp_localize_script('scb-script', 'scbSettings', [
-    'cookieName' => 'scb_consent',
-    'expiryDays' => 365,
-    'siteName' => get_bloginfo('name'),
-    'isPrivacyPage' => $is_privacy_page,
-    'privacyPolicyUrl' => $privacy_policy_url,
-  ]);
-});
-
-/* --- inject banner HTML in footer --- */
-add_action('wp_footer', function () {
-?>
-  <!-- Cookie Consent Banner (Injected by plugin) -->
-  <div id="scb-overlay" aria-hidden="true"></div>
-
-  <div id="scb-banner" role="dialog" aria-live="polite" aria-label="Cookie consent" aria-hidden="true">
-    <div class="scb-content">
-      <div class="scb-text">
-        <strong><?php echo esc_html(get_bloginfo('name')); ?></strong>
-        משתמשים בעוגיות כדי להבטיח תפקוד האתר ולשפר את חוויית המשתמש. אפשר לבחור אילו סוגי עוגיות להפעיל.
-      </div>
-
-      <div class="scb-controls">
-        <button id="scb-btn-accept-all" class="scb-btn scb-btn-primary" type="button">
-          <span class="scb-btn-text">קבל הכל</span>
-          <span class="scb-btn-loading" style="display: none;">טוען...</span>
-        </button>
-        <button id="scb-btn-reject" class="scb-btn" type="button">
-          <span class="scb-btn-text">הסר לא הכרחיות</span>
-          <span class="scb-btn-loading" style="display: none;">טוען...</span>
-        </button>
-        <button id="scb-btn-custom" class="scb-btn" type="button">העדפות</button>
-      </div>
-
-      <div id="scb-settings" class="scb-settings" hidden>
-        <form id="scb-form">
-          <fieldset>
-            <legend>בחירת עוגיות</legend>
-            <label><input type="checkbox" name="essential" checked disabled> הכרחיות (נדרשות)</label><br>
-            <label><input type="checkbox" name="analytics"> אנליטיקה (Google Analytics)</label><br>
-            <label><input type="checkbox" name="marketing"> שיווק/פרסום (Facebook/Ads)</label>
-          </fieldset>
-
-          <div class="scb-actions">
-            <button type="submit" class="scb-btn scb-btn-primary">
-              <span class="scb-btn-text">שמור בחירות</span>
-              <span class="scb-btn-loading" style="display: none;">טוען...</span>
-            </button>
-            <button type="button" id="scb-btn-cancel" class="scb-btn">בטל</button>
-          </div>
-        </form>
-      </div>
-      <div class="scb-more" style="display: flex;justify-content: space-between;direction: ltr;"><a href="<?php echo esc_url(get_privacy_policy_url() ?: '#'); ?>" target="_blank" rel="noopener">מדיניות פרטיות</a>
-        <a href="https://atarimtr.co.il/" target="_blank" rel="noopener" role="link">
-          <svg inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)" version="1.1" id="svg2" viewBox="0 0 24 24" height="16" width="16" sodipodi:docname="atr-guten-icon.svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
-            <sodipodi:namedview inkscape:window-maximized="1" inkscape:window-y="-8" inkscape:window-x="-8" inkscape:window-height="1009" inkscape:window-width="1920" inkscape:guide-bbox="true" showguides="false" showgrid="false" inkscape:current-layer="layer3" inkscape:document-units="px" inkscape:cy="12" inkscape:cx="12" inkscape:zoom="33.583333" inkscape:pageshadow="2" inkscape:pageopacity="0.0" borderopacity="1.0" bordercolor="#666666" pagecolor="#ffffff" id="base" units="px" inkscape:showpageshadow="2" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1"></sodipodi:namedview>
-            <defs id="defs4"></defs>
-            <g style="display:inline" inkscape:label="Layer 3" id="layer3" inkscape:groupmode="layer" transform="translate(0,-1028.3622)">
-              <path sodipodi:nodetypes="ccccscc" inkscape:connector-curvature="0" id="path4182" d="m 12.076801,1046.5293 -5.1846318,3.1169 3.6096058,1.9426 c 0,0 0.572927,0.233 1.489745,0.6308 1.041163,-0.5804 4.979356,-2.5632 4.979356,-2.5632 -1.889288,-1.1423 -4.894068,-3.1271 -4.894068,-3.1271 z" style="display:inline;fill:#26a2b4;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"></path>
-              <path sodipodi:nodetypes="cccccc" inkscape:connector-curvature="0" id="path4186" d="m 1.7276013,1046.5237 5.150301,-2.8783 5.1643637,2.9306 -5.1370677,3.067 -4.3969393,-2.4535 c -0.5179755,-0.2845 -0.7939729,-0.4057 -0.7806577,-0.6658 z" style="display:inline;fill:#4fab2e;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"></path>
-              <path sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" id="path4190" d="m 12.042266,1046.576 -5.1847193,-2.9627 -0.00947,-5.6896 5.1690883,2.8632 z" style="display:inline;fill:#d8d9de;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"></path>
-              <path sodipodi:nodetypes="cccccc" inkscape:connector-curvature="0" id="path4192" d="m 17.056384,1037.8742 v 5.7497 l 5.063042,2.8378 c 0,0 0.09576,-0.3658 0.07506,-1.5277 v -4.1967 z" style="display:inline;fill:#d8d9de;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.998851px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"></path>
-              <path sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" id="path4196" d="m 17.056384,1043.6651 -4.985509,2.9452 4.910058,3.0574 5.16782,-3.3012 z" style="display:inline;fill:#012788;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"></path>
-              <path sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" id="path4198" d="m 22.224248,1040.7869 0.0027,-4.1764 c -0.0027,-1.2226 -0.15367,-1.3928 -0.15367,-1.3928 l -5.016854,2.7161 z" style="display:inline;fill:#e0247d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0"></path>
-              <path sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" id="path4202" d="m 17.056384,1031.9634 -4.993594,3.225 5.016407,2.7568 4.994081,-2.7275 z" style="display:inline;fill:#bd0ad4;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"></path>
-              <path sodipodi:nodetypes="cccccc" inkscape:connector-curvature="0" id="path4210" d="m 12.090525,1029.5845 c 0,0 -0.549471,0.038 -1.250067,0.4265 -1.505646,0.9077 -3.9714327,2.3243 -3.9714327,2.3243 l 5.2137227,2.8591 4.973636,-3.231 z" style="display:inline;fill:#e96715;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"></path>
-              <path sodipodi:nodetypes="cccccc" inkscape:connector-curvature="0" id="path4214" d="m 6.8779023,1032.3353 c 0,0 -2.7172973,1.4804 -4.1721331,2.2468 -0.6391915,0.3653 -0.763411,0.7989 -0.763411,0.7989 l 4.9012607,2.5495 5.1952551,-2.7097 z" style="display:inline;fill:#f5b940;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"></path>
-              <path sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" id="path4256" d="m 1.714286,1040.7869 5.1724933,-2.8531 -4.9621748,-2.5439 c 0,0 -0.2103185,0.3073 -0.2103185,1.5978 0,1.2815 0,3.7992 0,3.7992 z" style="display:inline;fill:#f8ee31;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"></path>
-              <path sodipodi:nodetypes="ccccc" inkscape:connector-curvature="0" id="path4258" d="m 12.077531,1035.1884 -5.2102955,2.7454 5.1625545,2.8531 5.026594,-2.8531 z" style="display:inline;fill:#e4412e;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"></path>
-              <path sodipodi:nodetypes="cccccc" inkscape:connector-curvature="0" id="path532" d="m 6.8727612,1037.904 v 5.7497 l -5.0833936,2.8378 c 0,0 -0.096146,-0.3658 -0.075362,-1.5277 v -4.1967 z" style="display:inline;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#a6a6a6;stroke-width:0.101;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"></path>
-            </g>
-            <metadata id="metadata5298">
-              <rdf:rdf>
-                <cc:work rdf:about="AtarimTR" atarimtr="">
-                  <dc:title atarimtr="">AtarimTR</dc:title>
-                </cc:work>
-              </rdf:rdf>
-            </metadata>
-          </svg>
-        </a>
-
-
-      </div>
-    </div>
-  </div>
-  <!-- End Cookie Consent Banner -->
-<?php
-});
-
-/* --- optional: helper to print data-consent attributes for inline script placeholders --- */
-/* Usage example in theme or plugin: <script type="text/plain" data-consent="analytics" src="..."></script>
-   The JS will replace it when consent for 'analytics' is given. */
-
-// WooCommerce integration - only activate if WooCommerce is active
-function scb_init_woocommerce_integration()
-{
-  // Check if WooCommerce is active
-  if (!class_exists('WooCommerce')) {
-    return;
-  }
-
-  // הוספת צ'קבוקס אישור מדיניות פרטיות בעמוד התשלום
-  add_action('woocommerce_review_order_before_submit', function () {
-    woocommerce_form_field('privacy_policy_accepted', [
-      'type'        => 'checkbox',
-      'class'       => ['form-row privacy'],
-      'label_class' => ['woocommerce-form__label woocommerce-form__label-for-checkbox checkbox'],
-      'input_class' => ['woocommerce-form__input woocommerce-form__input-checkbox input-checkbox'],
-      'required'    => true,
-      'label'       => 'קראתי ואני מאשר/ת את <a href="' . esc_url(get_privacy_policy_url()) . '" target="_blank">מדיניות הפרטיות</a>',
-    ]);
-  }, 20);
-
-  // ולידציה – לוודא שסומן
-  add_action('woocommerce_checkout_process', function () {
-    if (empty($_POST['privacy_policy_accepted'])) {
-      wc_add_notice('יש לאשר את מדיניות הפרטיות לפני ביצוע ההזמנה.', 'error');
-    }
-  });
-
-  // שמירת ההסכמה בהזמנה
-  add_action('woocommerce_checkout_update_order_meta', function ($order_id) {
-    if (!empty($_POST['privacy_policy_accepted'])) {
-      update_post_meta($order_id, '_privacy_policy_accepted', 'yes');
-    }
-  });
-
-  // הצגת ההסכמה בממשק הניהול
-  add_action('woocommerce_admin_order_data_after_billing_address', function ($order) {
-    $accepted = get_post_meta($order->get_id(), '_privacy_policy_accepted', true);
-    if ($accepted === 'yes') {
-      echo '<p><strong>אישור מדיניות פרטיות:</strong> כן</p>';
-    }
-  });
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
 }
 
-// Initialize WooCommerce integration
-add_action('init', 'scb_init_woocommerce_integration');
+/**
+ * Current plugin version.
+ */
+define( 'ATR_SCB_VERSION', '2.0.0' );
+
+/**
+ * Plugin directory path.
+ */
+define( 'ATR_SCB_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+
+/**
+ * Plugin directory URL.
+ */
+define( 'ATR_SCB_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+/**
+ * The code that runs during plugin activation.
+ */
+function activate_atr_simple_cookie_consent_banner() {
+	// Activation code here if needed
+}
+register_activation_hook( __FILE__, 'activate_atr_simple_cookie_consent_banner' );
+
+/**
+ * The code that runs during plugin deactivation.
+ */
+function deactivate_atr_simple_cookie_consent_banner() {
+	// Deactivation code here if needed
+}
+register_deactivation_hook( __FILE__, 'deactivate_atr_simple_cookie_consent_banner' );
+
+/**
+ * The core plugin class that is used to define internationalization,
+ * admin-specific hooks, and public-facing site hooks.
+ */
+class ATR_Simple_Cookie_Consent_Banner {
+
+	/**
+	 * The loader that's responsible for maintaining and registering all hooks that power
+	 * the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      ATR_Simple_Cookie_Consent_Banner_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 */
+	protected $loader;
+
+	/**
+	 * The unique identifier of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 */
+	protected $plugin_name;
+
+	/**
+	 * The current version of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $version    The current version of the plugin.
+	 */
+	protected $version;
+
+	/**
+	 * Define the core functionality of the plugin.
+	 *
+	 * Set the plugin name and the plugin version that can be used throughout the plugin.
+	 * Load the dependencies, define the locale, and set the hooks for the admin area and
+	 * the public-facing side of the site.
+	 *
+	 * @since    1.0.0
+	 */
+	public function __construct() {
+		if ( defined( 'ATR_SCB_VERSION' ) ) {
+			$this->version = ATR_SCB_VERSION;
+		} else {
+			$this->version = '2.0.0';
+		}
+		$this->plugin_name = 'atr-simple-cookie-consent-banner';
+
+		// Add settings link to plugins page - must be added directly, not through loader
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'add_plugin_action_links' ) );
+
+		$this->load_dependencies();
+		$this->set_locale();
+		$this->define_admin_hooks();
+		$this->define_public_hooks();
+		$this->define_woocommerce_hooks();
+		$this->define_forms_hooks();
+	}
+
+	/**
+	 * Load the required dependencies for this plugin.
+	 *
+	 * Include the following files that make up the plugin:
+	 *
+	 * - ATR_Simple_Cookie_Consent_Banner_Loader. Orchestrates the hooks of the plugin.
+	 * - ATR_Simple_Cookie_Consent_Banner_i18n. Defines internationalization functionality.
+	 * - ATR_Simple_Cookie_Consent_Banner_Admin. Defines all hooks for the admin area.
+	 * - ATR_Simple_Cookie_Consent_Banner_Public. Defines all hooks for the public side of the site.
+	 *
+	 * Create an instance of the loader which will be used to register the hooks
+	 * with WordPress.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function load_dependencies() {
+
+		/**
+		 * The class responsible for orchestrating the actions and filters of the
+		 * core plugin.
+		 */
+		require_once ATR_SCB_PLUGIN_DIR . 'includes/class-atr-simple-cookie-consent-banner-loader.php';
+
+		/**
+		 * The class responsible for defining internationalization functionality
+		 * of the plugin.
+		 */
+		require_once ATR_SCB_PLUGIN_DIR . 'includes/class-atr-simple-cookie-consent-banner-i18n.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in the admin area.
+		 */
+		require_once ATR_SCB_PLUGIN_DIR . 'includes/class-atr-simple-cookie-consent-banner-admin.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in the public-facing
+		 * side of the site.
+		 */
+		require_once ATR_SCB_PLUGIN_DIR . 'includes/class-atr-simple-cookie-consent-banner-public.php';
+
+		/**
+		 * The class responsible for WooCommerce integration.
+		 */
+		require_once ATR_SCB_PLUGIN_DIR . 'includes/class-atr-simple-cookie-consent-banner-woocommerce.php';
+
+		/**
+		 * The class responsible for cookie consent management.
+		 */
+		require_once ATR_SCB_PLUGIN_DIR . 'includes/class-atr-simple-cookie-consent-banner-consent.php';
+
+		/**
+		 * The class responsible for global form integration.
+		 */
+		require_once ATR_SCB_PLUGIN_DIR . 'includes/class-atr-simple-cookie-consent-banner-forms.php';
+
+		$this->loader = new ATR_Simple_Cookie_Consent_Banner_Loader();
+
+	}
+
+	/**
+	 * Define the locale for this plugin for internationalization.
+	 *
+	 * Uses the ATR_Simple_Cookie_Consent_Banner_i18n class in order to set the domain and to register the hook
+	 * with WordPress.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function set_locale() {
+
+		$plugin_i18n = new ATR_Simple_Cookie_Consent_Banner_i18n();
+
+		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+
+	}
+
+	/**
+	 * Register all of the hooks related to the admin area functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_admin_hooks() {
+
+		$plugin_admin = new ATR_Simple_Cookie_Consent_Banner_Admin( $this->get_plugin_name(), $this->get_plugin_slug(), $this->get_version() );
+
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+	}
+
+	/**
+	 * Register all of the hooks related to the public-facing functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_public_hooks() {
+
+		$plugin_public = new ATR_Simple_Cookie_Consent_Banner_Public( $this->get_plugin_name(), $this->get_version() );
+
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_head', $plugin_public, 'block_tracking_scripts', 1 );
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'block_tracking_scripts', 1 );
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'inject_banner_html' );
+
+	}
+
+	/**
+	 * Register all of the hooks related to WooCommerce integration.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_woocommerce_hooks() {
+
+		$plugin_woocommerce = new ATR_Simple_Cookie_Consent_Banner_WooCommerce();
+
+		$this->loader->add_action( 'init', $plugin_woocommerce, 'init' );
+
+	}
+
+	/**
+	 * Register all of the hooks related to global form integration.
+	 *
+	 * @since    2.0.0
+	 * @access   private
+	 */
+	private function define_forms_hooks() {
+
+		$plugin_forms = new ATR_Simple_Cookie_Consent_Banner_Forms( $this->get_plugin_name() );
+
+	}
+
+	/**
+	 * Run the loader to execute all of the hooks with WordPress.
+	 *
+	 * @since    1.0.0
+	 */
+	public function run() {
+		$this->loader->run();
+	}
+
+	/**
+	 * The name of the plugin used to uniquely identify it within the context of
+	 * WordPress and to define internationalization functionality.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The name of the plugin.
+	 */
+	public function get_plugin_name() {
+		return $this->plugin_name;
+	}
+
+	/**
+	 * The slug of the plugin used to uniquely identify it within the context of
+	 * WordPress and to define internationalization functionality.
+	 *
+	 * @since     2.0.0
+	 * @return    string    The slug of the plugin.
+	 */
+	public function get_plugin_slug() {
+		return $this->plugin_name;
+	}
+
+	/**
+	 * The reference to the class that orchestrates the hooks with the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    ATR_Simple_Cookie_Consent_Banner_Loader    Orchestrates the hooks of the plugin.
+	 */
+	public function get_loader() {
+		return $this->loader;
+	}
+
+	/**
+	 * Retrieve the version number of the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The version number of the plugin.
+	 */
+	public function get_version() {
+		return $this->version;
+	}
+
+	/**
+	 * Add settings link to plugins page.
+	 *
+	 * @since     1.0.0
+	 * @param     array    $links    The existing links array.
+	 * @return    array    $links    Modified array with settings link.
+	 */
+	public function add_plugin_action_links( $links ) {
+		$testing_guide_link = '<a href="' . plugin_dir_url( __FILE__ ) . 'TESTING-GUIDE.md" target="_blank">' . __( 'Testing Guide', 'atr-simple-cookie-consent-banner' ) . '</a>';
+		$settings_link = '<a href="' . admin_url( 'options-general.php?page=atr-simple-cookie-consent-banner' ) . '">' . __( 'Settings', 'atr-simple-cookie-consent-banner' ) . '</a>';
+		array_unshift( $links, $settings_link, $testing_guide_link );
+		return $links;
+	}
+
+}
+
+/**
+ * Begins execution of the plugin.
+ *
+ * Since everything within the plugin is registered via hooks,
+ * then kicking off the plugin from this point in the file does
+ * not affect the page life cycle.
+ *
+ * @since    1.0.0
+ */
+function run_atr_simple_cookie_consent_banner() {
+
+	$plugin = new ATR_Simple_Cookie_Consent_Banner();
+	$plugin->run();
+
+}
+
+// The hook priority of 0 ensures this runs early
+add_action( 'plugins_loaded', 'run_atr_simple_cookie_consent_banner', 0 );

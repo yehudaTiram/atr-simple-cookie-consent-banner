@@ -1,78 +1,124 @@
 # Changelog
 
-All notable changes to the ATR Simple Cookie Consent Banner plugin will be documented in this file.
+All notable changes to this project will be documented in this file.
 
-## [1.0.2] - 2025-08-17
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### 🐛 **Bug Fixes**
-- **Fixed Click-Outside-to-Close on Privacy Pages** - Users can now click outside the banner to close it on privacy policy pages
-- **Eliminated Banner Flash After Consent** - Banner no longer briefly appears on pages where consent has already been given
-- **Improved Consent Validation** - Better timing and validation to prevent unnecessary banner display
+## [2.0.0] - 2025-01-23
 
-### 🔧 **Improvements**
-- **Enhanced Privacy Page Detection** - More robust detection logic for privacy policy pages
-- **Better CSS Management** - Fixed pointer-events issues that were preventing interaction
-- **Improved Asset Versioning** - Added SCB_VERSION constant for consistent version management
+### Added
+- Complete WordPress Plugin Boilerplate (WPBP) conversion
+- Professional class-based architecture
+- Comprehensive settings page with multiple sections
+- Enhanced cookie consent management
+- Improved tracking script blocking
+- Better internationalization support
+- WooCommerce integration improvements
+- Debug and development tools
+- Enhanced CSS styling and responsive design
+- Settings preferences form with cookie category selection
+- Comprehensive testing guide with testing scenarios and debugging tools
+- Global form integration - automatically adds privacy policy checkboxes to all forms (comments, contact forms, Gravity Forms, Ninja Forms, Contact Form 7, Elementor Forms, and generic forms)
 
-### 🛠️ **Developer Experience**
-- **Added Debug Capabilities** - Console logging for development and troubleshooting
-- **Enhanced Error Handling** - Better error prevention and debugging information
-- **Code Organization** - Cleaner initialization and consent checking logic
+### Changed
+- Restructured entire plugin architecture
+- Improved banner display logic
+- Enhanced consent checking mechanism
+- Better error handling and debugging
+- Updated all version numbers to 2.0.0
+- Moved CSS and JS files to `public/` directory for WPBP compliance
+- Improved banner header design (removed duplicate site name)
+- Improved admin menu structure - creates standalone menu when ATR Core plugin is not active
 
----
+### Fixed
+- Banner display issues in incognito mode
+- Missing JavaScript functions
+- HTML structure mismatches
+- CSS styling problems
+- Consent validation logic
+- Plugin action links functionality
+- Preferences button functionality (settings form toggle)
+- CSS class-based visibility system for settings form
+- File path issues for CSS and JavaScript assets
+- Debug code cleanup for production use
+- Made privacy note text i18n compatible
+- Updated POT file with new translatable strings
+- Fixed POT and PO files to be compatible with Poedit
+- Removed commented-out entries and duplicate strings from translation files
+- Added missing "ATR Cookie Consent Banner" string to translation files
 
-## [1.0.1] - 2025-08-15
+### 🔧 **Tracking Function Blocking & Restoration Issues Fixed**
+- **Infinite Re-blocking Loop**: Fixed critical issue where tracking functions were being restored then immediately re-blocked, causing infinite loops
+- **Consent-Based Blocking**: Added consent checks to prevent blocking when consent is already given
+- **Delayed Blocking Prevention**: Fixed delayed blocking from running after consent is given
+- **Function Restoration**: Implemented proper `restoreTrackingFunctions()` mechanism for all tracking services
+- **GTM/GA Blocking**: Improved blocking logic for Google Tag Manager and Google Analytics
+- **Facebook Pixel Blocking**: Enhanced blocking for Facebook Pixel tracking
+- **dataLayer Blocking**: Fixed blocking for Google Tag Manager dataLayer.push function
+- **Timing Issues**: Resolved complex timing issues with aggressive blocking vs. delayed blocking approaches
+- **Blocking Status Monitoring**: Added `isTrackingBlocked()` function for debugging blocking status
 
-### 🆕 **New Features**
-- **Privacy Policy Page Access** - Users can now read privacy policy pages without being blocked by the consent banner
-- **Smart Page Detection** - Automatically detects when users are on privacy policy pages
-- **Enhanced WooCommerce Integration** - Improved structure and performance for WooCommerce compatibility
+### 🌐 **Form Integration & Privacy Checkbox Issues Fixed**
+- **Search Box Privacy Checkbox**: Fixed issue where privacy checkbox was appearing on search forms (undesirable)
+- **Form Detection Logic**: Implemented smart content-based detection to identify forms that should have privacy checkboxes
+- **Form Whitelist System**: Added intelligent filtering to exclude search, login, and navigation forms
+- **Elementor Form Integration**: Fixed JavaScript errors and improved Elementor form detection
+- **Form Plugin Compatibility**: Enhanced support for Contact Form 7, Gravity Forms, Ninja Forms, and Elementor Forms
+- **Banner Exclusion**: Fixed issue where privacy checkbox was appearing on the cookie banner itself
+- **Smart Form Detection**: Implemented comprehensive logic to determine which forms collect personal data
 
-### 🔧 **Improvements**
-- **No More Flash on Page Reload** - Banner now starts hidden with smooth transitions
-- **Better Mobile Experience** - Responsive design with touch-friendly buttons and mobile-optimized layout
-- **Smooth Animations** - Added CSS transitions and transforms for professional appearance
-- **Loading States** - Visual feedback during consent operations
-- **Accessibility Enhancements** - Better ARIA labels and keyboard navigation support
+### 🎨 **UI/UX & Display Issues Fixed**
+- **Duplicate Header Elements**: Removed redundant `<h3>` element that was duplicating site name display
+- **Settings Form Visibility**: Fixed CSS-based visibility system for preferences form
+- **Button Functionality**: Resolved "Preferences" button not working issue
+- **Form Toggle Logic**: Fixed settings form show/hide functionality
+- **CSS Class Management**: Improved CSS class handling for form visibility states
 
-### 🐛 **Bug Fixes**
-- **Fixed Banner Flash** - Banner no longer briefly appears on page reload
-- **Fixed Mobile Blocking** - Banner no longer blocks content on mobile devices
-- **Fixed Privacy Page Access** - Users can now access privacy policy content while deciding on cookies
-- **Fixed Race Conditions** - Improved initialization timing to prevent display issues
+### 📱 **Browser & Compatibility Issues Fixed**
+- **Incognito Mode**: Fixed banner not displaying in incognito/private browsing mode
+- **CSS Asset Loading**: Fixed 404 errors for CSS and JavaScript files
+- **File Path Resolution**: Corrected asset paths for WPBP directory structure
+- **Cross-Browser Support**: Improved compatibility across different browsers and devices
 
-### 🎨 **UI/UX Improvements**
-- **Less Intrusive Overlay** - Privacy policy pages now have a lighter overlay (15% opacity vs 35%)
-- **Click-Outside to Close** - Users can close banner by clicking outside (mobile-friendly)
-- **Escape Key Support** - Added keyboard shortcut to close banner
-- **Professional Styling** - Enhanced button hover effects and visual feedback
-- **Hebrew Text Support** - Proper RTL support for Israeli websites
+### 🔍 **Testing & Debugging Improvements**
+- **Console Logging**: Enhanced debugging output for tracking function status
+- **Function Testing**: Added comprehensive testing functions for tracking functionality
+- **Status Monitoring**: Implemented real-time monitoring of blocking status
+- **Error Reporting**: Improved error reporting and debugging information
+- **Testing Guide**: Created comprehensive testing guide for users and developers
+- **User Guide**: Created comprehensive Hebrew user guide for non-technical users
 
-### 🏗️ **Technical Improvements**
-- **Better State Management** - Improved consent state handling and persistence
-- **Performance Optimization** - Reduced unnecessary DOM operations
-- **Code Organization** - Cleaner, more maintainable code structure
-- **WooCommerce Integration** - Single function wrapper for better performance
-- **Error Prevention** - Added checks to prevent multiple initializations
+### 🌍 **Internationalization & Translation Issues Fixed**
+- **Base Language Correction**: Fixed critical issue where Hebrew was used as base language instead of English
+- **POT File Generation**: Corrected POT file to use English msgids
+- **Translation File Naming**: Fixed PO/MO file naming convention (he_IL instead of he)
+- **Poedit Compatibility**: Resolved issues preventing Poedit from opening translation files
+- **Duplicate String Removal**: Cleaned up duplicate entries in translation files
+- **Translation Validation**: Improved validation of translation file contents
 
-### 📱 **Mobile Optimizations**
-- **Responsive Design** - Banner adapts to different screen sizes
-- **Touch-Friendly Buttons** - Larger buttons with proper spacing for mobile
-- **Mobile-First Layout** - Optimized for mobile devices while maintaining desktop experience
-- **Scroll Prevention** - Smart body scroll management (disabled on privacy pages)
+### ⚙️ **Admin & Settings Issues Fixed**
+- **Settings Page Access**: Fixed fatal errors preventing access to plugin settings
+- **Menu Structure**: Improved admin menu organization and accessibility
+- **Plugin Action Links**: Fixed plugin action links in WordPress admin
+- **Settings Form**: Enhanced settings form with better validation and user experience
 
-### 🔒 **Privacy & Compliance**
-- **Israeli Law Compliance** - Specifically designed for תיקון 13 לחוק הגנת הפרטיות
-- **Cookie Categories** - Essential, Analytics, and Marketing cookie management
-- **Consent Persistence** - Proper storage and retrieval of user consent
-- **Script Blocking** - Non-essential scripts blocked until consent is given
+### 🚀 **Performance & Technical Improvements**
+- **File Structure**: Optimized file organization for WPBP compliance
+- **Asset Loading**: Improved CSS and JavaScript asset loading
+- **Memory Management**: Better memory usage and cleanup
+- **Error Handling**: Enhanced error handling and graceful degradation
+- **Code Organization**: Improved code structure and maintainability
 
-### 📦 **Installation & Updates**
-- **Version Control** - Assets properly versioned for cache busting
-- **Clean Package** - Optimized file structure for WordPress installation
-- **Backward Compatibility** - Maintains compatibility with existing implementations
-
----
+### 📚 **Documentation & User Experience Improvements**
+- **Hebrew User Guide**: Created comprehensive HTML user guide in Hebrew for non-technical users
+- **Testing Guide**: Enhanced testing guide with data collection testing procedures
+- **Installation Instructions**: Added detailed step-by-step installation instructions
+- **Troubleshooting Guide**: Comprehensive troubleshooting section for common issues
+- **Legal Disclaimers**: Added clear legal disclaimers and user responsibility notices
+- **Visual Instructions**: Added visual cues and step-by-step numbered instructions
+- **Cross-Browser Instructions**: Detailed instructions for different browsers and devices
+- **Form Integration Documentation**: Clear explanation of privacy checkbox functionality
 
 ## [1.0.0] - Initial Release
 
@@ -93,6 +139,6 @@ All notable changes to the ATR Simple Cookie Consent Banner plugin will be docum
 - **Languages**: Hebrew (RTL) and English support
 - **License**: GPL-2.0+
 
----
+---****
 
 *For detailed installation instructions and usage examples, please refer to the plugin documentation.*
