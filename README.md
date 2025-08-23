@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 # תוסף תאימות פרטיות לוורדפרס ו-WooCommerce
 ****
 ## 📥 הורדה
 **הגרסה האחרונה זמינה להורדה מ:**
+=======
+# תוסף באנר הסכמה לעוגיות ומדיניות פרטיות ATR לוורדפרס
+## כדי לקבל עדכונים על גרסאות חדשות של התוסף יש להקיש על Watch בחלק העליון של דף זה. לא יזיק גם לתת כוכב בשביל לקדם את התוסף.
+## נא לשים לב: התוסף עושה עבודה חלקית בשלב זה ונמצא עדיין תחת פיתוח! 
+## ניתן להוריד את הקובץ עם הגרסה האחרונה מ:
+>>>>>>> 91ab63cc64ed3e291b9b68579807daf24e7f9dd9
 [https://atarimtr.co.il/wp-content/uploads/2025/06/atr-simple-cookie-consent-banner.zip](https://atarimtr.co.il/wp-content/uploads/2025/06/atr-simple-cookie-consent-banner.zip)
 
 ---

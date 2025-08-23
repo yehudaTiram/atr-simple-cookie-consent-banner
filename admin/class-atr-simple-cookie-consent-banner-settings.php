@@ -107,7 +107,7 @@ class ATR_Simple_Cookie_Consent_Banner_Settings
             add_submenu_page(
                 (string) constant('ATR_PLUGINS_MENU_SLUG'), // The slug of the parent menu, provided by the core plugin.
                 __('ATR Cookie Consent Banner Options', 'atr-simple-cookie-consent-banner'),
-                __('Cookie Consent Banner', 'atr-simple-cookie-consent-banner'),
+                __('ATR Cookie Consent Banner', 'atr-simple-cookie-consent-banner'),
                 'manage_options',
                 $this->plugin_name,
                 array($this, 'settings_page')
