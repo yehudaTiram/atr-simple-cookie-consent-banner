@@ -2,7 +2,7 @@
 ## כדי לקבל עדכונים על גרסאות חדשות של התוסף יש להקיש על Watch בחלק העליון של דף זה. לא יזיק גם לתת כוכב בשביל לקדם את התוסף.
 ## נא לשים לב: התוסף עושה עבודה חלקית בשלב זה ונמצא עדיין תחת פיתוח! 
 ## ניתן להוריד את הקובץ עם הגרסה האחרונה מ:
-[https://atarimtr.co.il/wp-content/uploads/2025/06/atr-simple-cookie-consent-banner.zip](https://atarimtr.co.il/wp-content/uploads/2025/06/atr-simple-cookie-consent-banner.zip)
+[https://atarimtr.co.il/wp-content/uploads/2025/06/atr-simple-cookie-consent-banner.zip](https://atarimtr.co.il/wp-content/uploads/2025/03/atr-simple-cookie-consent-banner.zip)
 
 --------------------
 ###  Privacy Compliance Plugin for WordPress/WooCommerce
