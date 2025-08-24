@@ -53,10 +53,10 @@
 
 ## 🧪 איך בודקים שהכל עובד?
 
-1. **פתח את האתר בחלון פרטי (Incognito)**
-2. **בדוק שהבאנר מופיע**
-3. **נסה את כפתור "העדפות"**
-4. **בחר אפשרויות שונות ובדוק שהן נשמרות**
+1. **פיתחו את האתר בחלון פרטי (Incognito)**
+2. **בידקו שהבאנר מופיע**
+3. **נסו את כפתור "העדפות"**
+4. **בחרו אפשרויות שונות ובידקו שהן נשמרות**
 
 **📖 מדריך בדיקה מפורט:** יש תפריט "Testing Guide" עם הוראות מפורטות
 
@@ -67,12 +67,12 @@
 ### דרישות מערכת:
 - WordPress 5.0 ומעלה
 - PHP 7.4 ומעלה
-- WooCommerce (אופציונלי, אבל מומלץ)
+- WooCommerce (אופציונלי)
 
 ### בעיות נפוצות:
-- **הבאנר לא מופיע?** בדוק שהתוסף מופעל ונסה לנקות Cache
-- **טקסטים באנגלית?** בדוק שהשפה מוגדרת לעברית ב-WordPress
-- **שגיאות?** בדוק את Console בדפדפן (F12)
+- **הבאנר לא מופיע?** לבדוק שהתוסף מופעל ונסה לנקות Cache
+- **טקסטים באנגלית?** לבדוק שהשפה מוגדרת לעברית ב-WordPress
+- **שגיאות?** לבדוק את Console בדפדפן (F12)
 
 ---
 
@@ -87,7 +87,7 @@
 ## ⚠️ חשוב לדעת
 
 ### אחריות:
-התוסף מסופק "כפי שהוא" (As Is). המפתח אינו אחראי לנזקים שעלולים להיגרם מהשימוש.
+התוסף מסופק "כפי שהוא" (As Is). המפתח אינו אחראי לנזקים שעלולים להיגרם מהשימוש. ראו גם היעדר מצגים והגבלת אחריות למטה
 
 ### ייעוץ משפטי:
 התוסף אינו מהווה ייעוץ משפטי. מומלץ להתייעץ עם עורך דין לגבי התאמה לחוקים הספציפיים שלך.
@@ -97,11 +97,80 @@
 
 ---
 
-## 📝 היסטוריית גרסאות
+## �� היסטוריית גרסאות - Version History
 
-**גרסה 2.0.0** - שכתוב מלא לקוד מקצועי יותר, הוספת תפריט הגדרות, מדריך בדיקה, ותמיכה בשפות.
+### גרסה 2.0.1 - Version 2.0.1 (2025-01-23)
 
-**גרסה 1.0.0** - גרסה ראשונית עם פונקציונליות בסיסית.
+#### ✨ תכונות חדשות - New Features
+- **זיהוי מתקדם של טפסי WooCommerce** - Enhanced WooCommerce checkout and payment gateway detection
+- **לוגיקת זיהוי טפסים חכמה** - Comprehensive form detection logic for privacy checkboxes
+- **החרגות JavaScript לטפסי תשלום** - JavaScript-side exclusions for WooCommerce and payment forms
+
+#### �� שינויים - Changes
+- **שיפור אינטגרציית טפסים** - Improved form integration to respect global form integration setting
+- **זיהוי מתקדם של iframe תשלומים** - Enhanced payment gateway iframe detection and exclusion
+- **תיבת סימון WooCommerce כעת מכבדת הגדרות אינטגרציה** - WooCommerce privacy checkbox now respects integration settings
+
+#### 🐛 תיקונים - Fixes
+- **תיבת סימון WooCommerce לא מופיעה יותר כשאינטגרציה גלובלית כבויה** - WooCommerce checkout forms no longer receive privacy checkboxes when global form integration is disabled
+- **החרגת iframe שערי תשלום** - Payment gateway iframes are properly excluded from privacy checkbox injection
+- **זיהוי טפסים משופר** - Enhanced form detection to prevent interference with checkout processes
+- **תיבת סימון WooCommerce כעת נשלטת כראוי** - WooCommerce privacy checkbox now properly controlled by integration settings
+- **תיבת סימון WooCommerce מכבדת כעת את שתי ההגדרות** - WooCommerce privacy checkbox now respects both "Global Form Integration" and "WooCommerce Integration" settings
+
+#### 🔧 שיפורים טכניים - Technical Improvements
+- **תיקון אי-התאמה בשמות אפשרויות** - Fixed option name mismatch in WooCommerce class
+- **הוספת פרמטר constructor לעקביות** - Added constructor parameter for plugin_name consistency
+- **שינוי hook אתחול ל-wp_loaded** - Changed initialization hook to wp_loaded for proper settings loading
+- **עדכון גרסה ל-2.0.1 בכל הקבצים** - Updated version to 2.0.1 consistently across all files
+
+#### 📚 תיעוד - Documentation
+- **הוספת רשומות changelog מקיפות** - Added comprehensive changelog entries for version 2.0.1
+- **עדכון מדריך בדיקות** - Updated testing guide with new features
+- **שיפור הוראות שימוש** - Enhanced user instructions
+
+---
+
+### גרסה 2.0.0 - Version 2.0.0 (2025-01-23)
+
+#### ✨ תכונות חדשות - New Features
+- **המרה מלאה ל-WordPress Plugin Boilerplate (WPBP)** - Complete WordPress Plugin Boilerplate conversion
+- **ארכיטקטורה מקצועית מבוססת מחלקות** - Professional class-based architecture
+- **דף הגדרות מקיף עם מספר סעיפים** - Comprehensive settings page with multiple sections
+- **ניהול הסכמה משופר** - Enhanced cookie consent management
+- **חסימת סקריפטי מעקב משופרת** - Improved tracking script blocking
+- **תמיכה בינלאומית משופרת** - Better internationalization support
+- **אינטגרציה גלובלית של טפסים** - Global form integration for all forms
+- **אינטגרציה עם WooCommerce** - WooCommerce integration improvements
+
+#### �� שינויים - Changes
+- **ארגון מחדש של ארכיטקטורת התוסף** - Restructured entire plugin architecture
+- **לוגיקת הצגת באנר משופרת** - Improved banner display logic
+- **מנגנון בדיקת הסכמה משופר** - Enhanced consent checking mechanism
+- **טיפול בשגיאות ומעקב משופר** - Better error handling and debugging
+- **עדכון כל מספרי הגרסאות ל-2.0.0** - Updated all version numbers to 2.0.0
+
+#### 🐛 תיקונים - Fixes
+- **בעיות הצגת באנר במצב אינקוגניטו** - Banner display issues in incognito mode
+- **פונקציות JavaScript חסרות** - Missing JavaScript functions
+- **אי-התאמות מבנה HTML** - HTML structure mismatches
+- **בעיות עיצוב CSS** - CSS styling problems
+- **לוגיקת אימות הסכמה** - Consent validation logic
+- **תקינות קישורי פעולת התוסף** - Plugin action links functionality
+
+#### 📚 תיעוד - Documentation
+- **מדריך בדיקות מקיף** - Comprehensive testing guide with testing scenarios and debugging tools
+- **מדריך משתמש בעברית** - Hebrew user guide for non-technical users
+- **הוראות התקנה מפורטות** - Detailed step-by-step installation instructions
+- **מדריך פתרון בעיות** - Comprehensive troubleshooting section for common issues
+
+---
+
+### גרסה 1.0.0 - Version 1.0.0 (Initial Release)
+- **שחרור ראשוני** - Initial release
+- **באנר הסכמה בסיסי** - Basic cookie consent banner
+- **תמיכה בעברית** - Hebrew language support
+- **עמידה בחוק הגנת הפרטיות הישראלי** - Compliance with Israeli Privacy Protection Law
 
 ---
 
