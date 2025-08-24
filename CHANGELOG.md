@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced form detection to prevent interference with checkout processes
 - WooCommerce privacy checkbox now properly controlled by global form integration setting
 - WooCommerce privacy checkbox now respects both "Global Form Integration" and "WooCommerce Integration" settings
+- Plugin action links now correctly point to custom menu page instead of 404 error
 
 ## [2.0.0] - 2025-01-23
 
