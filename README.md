@@ -143,7 +143,7 @@
 - **אינטגרציה גלובלית של טפסים** - Global form integration for all forms
 - **אינטגרציה עם WooCommerce** - WooCommerce integration improvements
 
-#### �� שינויים - Changes
+#### שינויים - Changes
 - **ארגון מחדש של ארכיטקטורת התוסף** - Restructured entire plugin architecture
 - **לוגיקת הצגת באנר משופרת** - Improved banner display logic
 - **מנגנון בדיקת הסכמה משופר** - Enhanced consent checking mechanism
