@@ -140,7 +140,7 @@
       }
       
       // Restore original tracking functions
-      if (window.gtag && window.gtag.toString().includes('SCB: gtag() blocked')) {
+      if (window.gtag && window.gtag._scbBlocked) {
         if (window.gtag._original) {
           window.gtag = window.gtag._original;
         } else {
@@ -148,7 +148,7 @@
         }
       }
       
-      if (window.ga && window.ga.toString().includes('SCB: ga() blocked')) {
+      if (window.ga && window.ga._scbBlocked) {
         if (window.ga._original) {
           window.ga = window.ga._original;
         } else {
@@ -156,7 +156,7 @@
         }
       }
       
-      if (window.dataLayer && window.dataLayer.push && window.dataLayer.push.toString().includes('SCB: dataLayer.push() blocked')) {
+      if (window.dataLayer && window.dataLayer.push && window.dataLayer.push._scbBlocked) {
         if (window.dataLayer._originalPush) {
           window.dataLayer.push = window.dataLayer._originalPush;
         }
@@ -179,7 +179,7 @@
     if (type === 'marketing') {
       // Remove marketing blocking
       
-      if (window.fbq && window.fbq.toString().includes('SCB: fbq() blocked')) {
+      if (window.fbq && window.fbq._scbBlocked) {
         if (window.fbq._original) {
           window.fbq = window.fbq._original;
         } else {
@@ -205,21 +205,21 @@
     delete window._scbFetchOverridden;
     
     // Restore all blocked functions to their originals
-    if (window.gtag && window.gtag.toString().includes('SCB: gtag() blocked')) {
+    if (window.gtag && window.gtag._scbBlocked) {
       if (window.gtag._original) {
         window.gtag = window.gtag._original;
       } else {
         delete window.gtag;
       }
     }
-    if (window.ga && window.ga.toString().includes('SCB: ga() blocked')) {
+    if (window.ga && window.ga._scbBlocked) {
       if (window.ga._original) {
         window.ga = window.ga._original;
       } else {
         delete window.ga;
       }
     }
-    if (window.fbq && window.fbq.toString().includes('SCB: fbq() blocked')) {
+    if (window.fbq && window.fbq._scbBlocked) {
       if (window.fbq._original) {
         window.fbq = window.fbq._original;
       } else {
@@ -497,8 +497,9 @@
     
     // Block gtag
     if (window.gtag) {
-      if (!window.gtag.toString().includes('SCB: gtag() blocked')) {
+      if (window.gtag && !window.gtag._scbBlocked) {
         window.gtag._original = window.gtag;
+        window.gtag._scbBlocked = true;
         window.gtag = function() {
           console.log('SCB: gtag() blocked - no consent given');
           return false;
@@ -510,13 +511,15 @@
         console.log('SCB: gtag() blocked - no consent given');
         return false;
       };
+      window.gtag._scbBlocked = true;
       console.log('SCB: gtag() function created and blocked');
     }
     
     // Block ga
     if (window.ga) {
-      if (!window.ga.toString().includes('SCB: ga() blocked')) {
+      if (window.ga && !window.ga._scbBlocked) {
         window.ga._original = window.ga;
+        window.ga._scbBlocked = true;
         window.ga = function() {
           console.log('SCB: ga() blocked - no consent given');
           return false;
@@ -528,13 +531,15 @@
         console.log('SCB: ga() blocked - no consent given');
         return false;
       };
+      window.ga._scbBlocked = true;
       console.log('SCB: ga() function created and blocked');
     }
     
     // Block fbq
     if (window.fbq) {
-      if (!window.fbq.toString().includes('SCB: fbq() blocked')) {
+      if (window.fbq && !window.fbq._scbBlocked) {
         window.fbq._original = window.fbq;
+        window.fbq._scbBlocked = true;
         window.fbq = function() {
           console.log('SCB: fbq() blocked - no consent given');
           return false;
@@ -546,13 +551,15 @@
         console.log('SCB: fbq() blocked - no consent given');
         return false;
       };
+      window.fbq._scbBlocked = true;
       console.log('SCB: fbq() function created and blocked');
     }
     
     // Block dataLayer.push
     if (window.dataLayer) {
-      if (!window.dataLayer.push.toString().includes('SCB: dataLayer.push() blocked')) {
+      if (window.dataLayer && window.dataLayer.push && !window.dataLayer.push._scbBlocked) {
         window.dataLayer._originalPush = window.dataLayer.push;
+        window.dataLayer.push._scbBlocked = true;
         window.dataLayer.push = function() {
           console.log('SCB: dataLayer.push() blocked - no consent given');
           return false;
