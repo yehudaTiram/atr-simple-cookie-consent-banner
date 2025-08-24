@@ -97,7 +97,7 @@
 
 ---
 
-## �� היסטוריית גרסאות - Version History
+## היסטוריית גרסאות - Version History
 
 ### גרסה 2.0.1 - Version 2.0.1 (2025-01-23)
 
@@ -106,7 +106,7 @@
 - **לוגיקת זיהוי טפסים חכמה** - Comprehensive form detection logic for privacy checkboxes
 - **החרגות JavaScript לטפסי תשלום** - JavaScript-side exclusions for WooCommerce and payment forms
 
-#### �� שינויים - Changes
+#### שינויים - Changes
 - **שיפור אינטגרציית טפסים** - Improved form integration to respect global form integration setting
 - **זיהוי מתקדם של iframe תשלומים** - Enhanced payment gateway iframe detection and exclusion
 - **תיבת סימון WooCommerce כעת מכבדת הגדרות אינטגרציה** - WooCommerce privacy checkbox now respects integration settings
