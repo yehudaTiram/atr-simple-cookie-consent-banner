@@ -32,7 +32,7 @@
         }
       }
     } catch (e) {
-      console.warn('SCB Debug - Error reading localStorage:', e);
+      // Silent error handling
     }
     
     // fallback read cookie
@@ -48,7 +48,7 @@
         }
       }
     } catch (e) {
-      console.warn('SCB Debug - Error reading cookie:', e);
+      // Silent error handling
     }
     
     return null;
@@ -167,7 +167,7 @@
       gtmScripts.forEach(script => {
         if (script.src && script.src.includes('data:text/javascript')) {
           // Restore original GTM script
-          const originalSrc = script.getAttribute('data-original-src') || script.src.replace('data:text/javascript,console.log("SCB: Script blocked - no consent given")', '');
+          const originalSrc = script.getAttribute('data-original-src') || script.src.replace('data:text/javascript,', '');
           if (originalSrc && !originalSrc.includes('data:text/javascript')) {
             script.src = originalSrc;
           }
@@ -187,7 +187,7 @@
         }
       }
       
-      if (window._gaq && window._gaq.push && window._gaq.push.toString().includes('SCB: _gaq.push() blocked')) {
+      if (window._gaq && window._gaq.push && window._gaq.push._scbBlocked) {
         if (window._gaq._originalPush) {
           window._gaq.push = window._gaq._originalPush;
         }
@@ -251,10 +251,6 @@
         banner.classList.add('visible');
       }
       
-    } else {
-      console.error('Banner or overlay elements not found!');
-      console.error('Banner:', banner);
-      console.error('Overlay:', overlay);
     }
   }
 
@@ -302,7 +298,6 @@
 
     // Check if banner elements exist
     if (!banner || !overlay) {
-      console.error('Cookie consent banner elements not found!');
       return;
     }
     
@@ -489,11 +484,8 @@
     // Check if consent has already been given - don't block if it has
     const currentConsent = getConsent();
     if (currentConsent && (currentConsent.analytics || currentConsent.marketing)) {
-      console.log('SCB: Consent already given, skipping tracking function blocking');
       return;
     }
-    
-    console.log('SCB: Setting up tracking function blocking...');
     
     // Block gtag
     if (window.gtag) {
@@ -501,18 +493,15 @@
         window.gtag._original = window.gtag;
         window.gtag._scbBlocked = true;
         window.gtag = function() {
-          console.log('SCB: gtag() blocked - no consent given');
           return false;
         };
-        console.log('SCB: gtag() function blocked');
+
       }
     } else {
       window.gtag = function() {
-        console.log('SCB: gtag() blocked - no consent given');
         return false;
       };
       window.gtag._scbBlocked = true;
-      console.log('SCB: gtag() function created and blocked');
     }
     
     // Block ga
@@ -521,18 +510,15 @@
         window.ga._original = window.ga;
         window.ga._scbBlocked = true;
         window.ga = function() {
-          console.log('SCB: ga() blocked - no consent given');
           return false;
         };
-        console.log('SCB: ga() function blocked');
+
       }
     } else {
       window.ga = function() {
-        console.log('SCB: ga() blocked - no consent given');
         return false;
       };
       window.ga._scbBlocked = true;
-      console.log('SCB: ga() function created and blocked');
     }
     
     // Block fbq
@@ -541,18 +527,15 @@
         window.fbq._original = window.fbq;
         window.fbq._scbBlocked = true;
         window.fbq = function() {
-          console.log('SCB: fbq() blocked - no consent given');
           return false;
         };
-        console.log('SCB: fbq() function created and blocked');
+
       }
     } else {
       window.fbq = function() {
-        console.log('SCB: fbq() blocked - no consent given');
         return false;
       };
       window.fbq._scbBlocked = true;
-      console.log('SCB: fbq() function created and blocked');
     }
     
     // Block dataLayer.push
@@ -561,51 +544,43 @@
         window.dataLayer._originalPush = window.dataLayer.push;
         window.dataLayer.push._scbBlocked = true;
         window.dataLayer.push = function() {
-          console.log('SCB: dataLayer.push() blocked - no consent given');
           return false;
         };
-        console.log('SCB: dataLayer.push() function blocked');
+
       }
     }
     
-    console.log('SCB: Tracking function blocking completed');
+
   }
 
   // Restore original tracking functions when consent is given
   function restoreTrackingFunctions() {
-    console.log('SCB: Restoring tracking functions...');
     
     // Restore gtag
     if (window.gtag && window.gtag._original) {
       window.gtag = window.gtag._original;
-      console.log('SCB: gtag() function restored');
     }
     
     // Restore ga
     if (window.ga && window.ga._original) {
       window.ga = window.ga._original;
-      console.log('SCB: ga() function restored');
     }
     
     // Restore fbq
     if (window.fbq && window.fbq._original) {
       window.fbq = window.fbq._original;
-      console.log('SCB: fbq() function restored');
     }
     
     // Restore dataLayer.push
     if (window.dataLayer && window.dataLayer._originalPush) {
       window.dataLayer.push = window.dataLayer._originalPush;
-      console.log('SCB: dataLayer.push() function restored');
     }
     
-    console.log('SCB: Tracking functions restoration completed');
   }
   
   // Block tracking functions immediately to prevent network requests
   // Then re-block after scripts load to ensure complete coverage
   if (shouldBlock) {
-    console.log('SCB: Blocking tracking functions immediately...');
     setupTrackingBlocking();
     
     // Also block after a delay to catch any late-loading scripts
@@ -613,23 +588,18 @@
       // Check if consent has already been given - don't re-block if it has
       const currentConsent = getConsent();
       if (currentConsent && (currentConsent.analytics || currentConsent.marketing)) {
-        console.log('SCB: Consent already given, skipping delayed blocking');
         return;
       }
       
-      console.log('SCB: Re-blocking to catch late-loading scripts...');
       setupTrackingBlocking();
       
-      // Test blocking after setup
-      setTimeout(() => {
-        if (window.scb && window.scb.testTracking) {
-          console.log('SCB: Testing tracking blocking after setup...');
-          window.scb.testTracking();
-        }
-      }, 500);
+              // Test blocking after setup
+        setTimeout(() => {
+          if (window.scb && window.scb.testTracking) {
+            window.scb.testTracking();
+          }
+        }, 500);
     }, 2000); // Wait 2 seconds for any late scripts
-  } else {
-    console.log('SCB: Consent already given, skipping initial tracking function blocking');
   }
 
   // expose for debugging / admin
@@ -647,103 +617,50 @@
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         location.reload(); // Reload to test banner again
       } catch (e) {
-        console.error('Error clearing consent:', e);
+        // Silent error handling
       }
     },
          forceShow: function() {
        showBanner();
      },
-           testTracking: function() {
-        console.log('Testing tracking functionality...');
-        console.log('gtag available:', typeof window.gtag === 'function');
-        console.log('ga available:', typeof window.ga === 'function');
-        console.log('dataLayer available:', window.dataLayer);
-        console.log('fbq available:', typeof window.fbq === 'function');
-        
+     testTracking: function() {
         // Test if functions are actually blocked
-        console.log('--- Testing if functions are blocked ---');
         if (typeof window.gtag === 'function') {
-          const gtagResult = window.gtag('event', 'test', { event_category: 'debug', event_label: 'consent_test' });
-          console.log('gtag test result:', gtagResult);
+          window.gtag('event', 'test', { event_category: 'debug', event_label: 'consent_test' });
         }
         if (typeof window.ga === 'function') {
-          const gaResult = window.ga('send', 'event', 'test', 'consent_test');
-          console.log('ga test result:', gaResult);
+          window.ga('send', 'event', 'test', 'consent_test');
         }
         if (typeof window.fbq === 'function') {
-          const fbqResult = window.fbq('track', 'test', { event_category: 'debug', event_label: 'consent_test' });
-          console.log('fbq test result:', fbqResult);
-        }
-        
-        // Check if functions are our blocked versions
-        console.log('--- Function blocking status ---');
-        if (window.gtag) {
-          console.log('gtag is blocked:', window.gtag.toString().includes('SCB: gtag() blocked'));
-        }
-        if (window.ga) {
-          console.log('ga is blocked:', window.ga.toString().includes('SCB: ga() blocked'));
-        }
-        if (window.fbq) {
-          console.log('fbq is blocked:', window.fbq.toString().includes('SCB: fbq() blocked'));
+          window.fbq('track', 'test', { event_category: 'debug', event_label: 'consent_test' });
         }
       },
       
       // Check if tracking functions are currently blocked
       isTrackingBlocked: function() {
         const status = {
-          gtag: window.gtag && window.gtag.toString().includes('SCB: gtag() blocked'),
-          ga: window.ga && window.ga.toString().includes('SCB: ga() blocked'),
-          fbq: window.fbq && window.fbq.toString().includes('SCB: fbq() blocked'),
-          dataLayer: window.dataLayer && window.dataLayer.push && window.dataLayer.push.toString().includes('SCB: dataLayer.push() blocked')
+          gtag: window.gtag && window.gtag._scbBlocked,
+          ga: window.ga && window.ga._scbBlocked,
+          fbq: window.fbq && window.fbq._scbBlocked,
+          dataLayer: window.dataLayer && window.dataLayer.push && window.dataLayer.push._scbBlocked
         };
-        
-        console.log('--- Tracking Function Blocking Status ---');
-        console.log('gtag blocked:', status.gtag);
-        console.log('ga blocked:', status.ga);
-        console.log('fbq blocked:', status.fbq);
-        console.log('dataLayer.push blocked:', status.dataLayer);
         
         return status;
       },
       
       debugConsent: function() {
-        console.log('Current consent status:');
-        console.log('scb_consent cookie:', document.cookie.match(/scb_consent=([^;]+)/));
-        console.log('scb_consent_given cookie:', document.cookie.match(/scb_consent_given=([^;]+)/));
-        console.log('localStorage consent:', localStorage.getItem('scb_consent'));
-        console.log('getConsent() result:', getConsent());
-        console.log('Blocking flags:', {
-          createElement: window._scbCreateElementOverridden,
-          createElementNS: window._scbCreateElementNSOverridden,
-          imgBlocking: window._scbImgBlockingOverridden,
-          xhr: window._scbXHROverridden,
-          fetch: window._scbFetchOverridden
-        });
+        // Function kept for compatibility but no longer logs
       },
       debugGTM: function() {
-        console.log('GTM Detection:');
-        console.log('GTM scripts found:', document.querySelectorAll('script[src*="googletagmanager"], script[src*="gtm.js"]'));
-        console.log('Blocked GTM scripts:', document.querySelectorAll('script[src*="googletagmanager"][src*="data:text/javascript"], script[src*="gtm.js"][src*="data:text/javascript"]'));
-        console.log('GTM scripts with original sources:', document.querySelectorAll('script[data-original-src*="googletagmanager"], script[data-original-src*="gtm.js"]'));
-        console.log('dataLayer available:', window.dataLayer);
-        console.log('gtag available:', typeof window.gtag === 'function');
+        // Function kept for compatibility but no longer logs
       },
       testConsentCookies: function() {
-        console.log('Testing consent cookies...');
-        console.log('All cookies:', document.cookie);
-        console.log('scb_consent_given:', document.cookie.match(/scb_consent_given=([^;]+)/));
-        console.log('scb_consent:', document.cookie.match(/scb_consent=([^;]+)/));
-        console.log('localStorage consent:', localStorage.getItem('scb_consent'));
-        
         // Test if we can set cookies
         try {
           document.cookie = 'scb_test_cookie=test; path=/; SameSite=Lax';
-          const testCookie = document.cookie.match(/scb_test_cookie=([^;]+)/);
-          
-          // Clean up test cookie
           document.cookie = 'scb_test_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         } catch (e) {
-          console.error('Error setting test cookie:', e);
+          // Silent error handling
         }
       }
   };

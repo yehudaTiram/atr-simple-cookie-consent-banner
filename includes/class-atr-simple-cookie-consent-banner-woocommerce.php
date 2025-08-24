@@ -9,6 +9,23 @@
 class ATR_Simple_Cookie_Consent_Banner_WooCommerce {
 
 	/**
+	 * Plugin name
+	 *
+	 * @var string
+	 */
+	private $plugin_name;
+
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @since    1.0.0
+	 * @param    string    $plugin_name    The name of the plugin.
+	 */
+	public function __construct( $plugin_name ) {
+		$this->plugin_name = $plugin_name;
+	}
+
+	/**
 	 * Initialize WooCommerce integration.
 	 *
 	 * @since    1.0.0
@@ -16,6 +33,17 @@ class ATR_Simple_Cookie_Consent_Banner_WooCommerce {
 	public function init() {
 		// Check if WooCommerce is active
 		if ( ! class_exists( 'WooCommerce' ) ) {
+			return;
+		}
+
+		// Check if either global form integration OR WooCommerce integration is enabled
+		$options = get_option( $this->plugin_name, array() );
+		
+		$global_form_enabled = !empty( $options['global_form_integration'] ) && $options['global_form_integration'] === 'on';
+		$woocommerce_enabled = !empty( $options['woocommerce_integration'] ) && $options['woocommerce_integration'] === 'on';
+		
+		// Don't add WooCommerce privacy checkbox if neither setting is enabled
+		if ( !$global_form_enabled && !$woocommerce_enabled ) {
 			return;
 		}
 

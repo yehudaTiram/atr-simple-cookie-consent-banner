@@ -3,7 +3,7 @@
  * Plugin Name: ATR Simple Cookie Consent Banner for Israeli web sites
  * Description: Cookie consent banner specifically designed for Israeli websites to comply with the 13th amendment of the Privacy Protection Law (תיקון 13 לחוק הגנת הפרטיות). Handles Essential, Analytics, and Marketing cookies with proper consent management. Suitable for all Israeli businesses and websites. Use at your own risk - no warranty or liability for damages.
  * Plugin URI:        https://atarimtr.co.il
- * Version:           2.0.0
+ * Version:           2.0.1
  * Author:            Yehuda Tiram
  * Author URI:        https://atarimtr.co.il/
  * License:           GPL-2.0+
@@ -25,7 +25,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Current plugin version.
  */
-define( 'ATR_SCB_VERSION', '2.0.0' );
+define( 'ATR_SCB_VERSION', '2.0.1' );
 
 /**
  * Plugin directory path.
@@ -100,7 +100,7 @@ class ATR_Simple_Cookie_Consent_Banner {
 		if ( defined( 'ATR_SCB_VERSION' ) ) {
 			$this->version = ATR_SCB_VERSION;
 		} else {
-			$this->version = '2.0.0';
+			$this->version = '2.0.1';
 		}
 		$this->plugin_name = 'atr-simple-cookie-consent-banner';
 
@@ -235,9 +235,10 @@ class ATR_Simple_Cookie_Consent_Banner {
 	 */
 	private function define_woocommerce_hooks() {
 
-		$plugin_woocommerce = new ATR_Simple_Cookie_Consent_Banner_WooCommerce();
+		$plugin_woocommerce = new ATR_Simple_Cookie_Consent_Banner_WooCommerce( $this->get_plugin_name() );
 
-		$this->loader->add_action( 'init', $plugin_woocommerce, 'init' );
+		// Use wp_loaded instead of init to ensure settings are loaded
+		$this->loader->add_action( 'wp_loaded', $plugin_woocommerce, 'init' );
 
 	}
 

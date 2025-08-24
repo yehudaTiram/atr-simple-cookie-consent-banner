@@ -521,6 +521,82 @@ class ATR_Simple_Cookie_Consent_Banner_Forms
                 return false;
             }
             
+            // Function to check if a form should be skipped
+            function shouldSkipForm(form) {
+                // Skip WooCommerce checkout forms
+                const formId = (form.id || '').toLowerCase();
+                const formClass = (form.className || '').toLowerCase();
+                const formAction = (form.action || '').toLowerCase();
+                
+                // WooCommerce checkout indicators
+                const woocommerceIndicators = [
+                    'woocommerce-checkout', 'checkout', 'order_review', 'order_review_ajax',
+                    'customer_details', 'billing', 'shipping', 'payment', 'place_order',
+                    'woocommerce', 'wc-', 'checkout-form', 'order-form'
+                ];
+                
+                for (const indicator of woocommerceIndicators) {
+                    if (formId.includes(indicator) || formClass.includes(indicator) || formAction.includes(indicator)) {
+                        return true;
+                    }
+                }
+                
+                // Check for WooCommerce-specific form fields
+                const woocommerceFields = [
+                    'billing_first_name', 'billing_last_name', 'billing_email', 'billing_phone',
+                    'shipping_first_name', 'shipping_last_name', 'shipping_email', 'shipping_phone',
+                    'order_notes', 'payment_method', 'terms', 'place_order'
+                ];
+                
+                const inputs = form.querySelectorAll('input');
+                for (const input of inputs) {
+                    const name = input.name || '';
+                    if (woocommerceFields.includes(name)) {
+                        return true;
+                    }
+                }
+                
+                // Check if form is within WooCommerce checkout page
+                let parent = form.parentElement;
+                while (parent) {
+                    const parentId = (parent.id || '').toLowerCase();
+                    const parentClass = (parent.className || '').toLowerCase();
+                    
+                    if (parentId.includes('woocommerce') || parentClass.includes('woocommerce') ||
+                        parentId.includes('checkout') || parentClass.includes('checkout')) {
+                        return true;
+                    }
+                    
+                    parent = parent.parentElement;
+                }
+                
+                // Skip payment gateway iframes
+                parent = form.parentElement;
+                while (parent) {
+                    if (parent.tagName === 'IFRAME') {
+                        const src = (parent.src || '').toLowerCase();
+                        const title = (parent.title || '').toLowerCase();
+                        const name = (parent.name || '').toLowerCase();
+                        
+                        const paymentIndicators = [
+                            'stripe', 'paypal', 'square', 'adyen', 'braintree', 'klarna',
+                            'checkout', 'payment', 'gateway', 'processor', 'merchant',
+                            'secure', 'ssl', 'https', 'payment-form', 'checkout-form'
+                        ];
+                        
+                        for (const indicator of paymentIndicators) {
+                            if (src.includes(indicator) || title.includes(indicator) || name.includes(indicator)) {
+                                return true;
+                            }
+                        }
+                    }
+                    
+                    parent = parent.parentElement;
+                }
+                
+                return false;
+            }
+            
             function addPrivacyCheckboxToForm(form) {
                 // Skip forms that already have privacy checkboxes
                 if (form.querySelector('input[name*="privacy"]')) {
@@ -589,6 +665,10 @@ class ATR_Simple_Cookie_Consent_Banner_Forms
                 const forms = document.querySelectorAll('form:not([data-privacy-added])');
                 
                 forms.forEach(function(form) {
+                    // Skip WooCommerce checkout and payment forms
+                    if (shouldSkipForm(form)) {
+                        return;
+                    }
                     addPrivacyCheckboxToForm(form);
                 });
                 
@@ -653,6 +733,16 @@ class ATR_Simple_Cookie_Consent_Banner_Forms
 	private function should_add_privacy_checkbox($form) {
 		// Skip forms that are part of the cookie consent system
 		if ($this->is_cookie_consent_form($form)) {
+			return false;
+		}
+
+		// Skip WooCommerce checkout and payment forms
+		if ($this->is_woocommerce_checkout_form($form)) {
+			return false;
+		}
+
+		// Skip payment gateway iframes
+		if ($this->is_payment_gateway_iframe($form)) {
 			return false;
 		}
 
@@ -1245,6 +1335,123 @@ class ATR_Simple_Cookie_Consent_Banner_Forms
 				if ($this->elementor_element_has_personal_data($child)) {
 					return true;
 				}
+			}
+		}
+		
+		return false;
+	}
+
+	/**
+	 * Check if a form is a WooCommerce checkout form
+	 *
+	 * @param DOMElement $form The form element to check
+	 * @return bool True if it's a WooCommerce checkout form
+	 */
+	private function is_woocommerce_checkout_form($form) {
+		// Check form ID and classes for WooCommerce checkout
+		$form_id = strtolower($form->getAttribute('id') ?: '');
+		$form_class = strtolower($form->getAttribute('class') ?: '');
+		
+		$woocommerce_indicators = [
+			'woocommerce-checkout', 'checkout', 'order_review', 'order_review_ajax',
+			'customer_details', 'billing', 'shipping', 'payment', 'place_order',
+			'woocommerce', 'wc-', 'checkout-form', 'order-form'
+		];
+		
+		foreach ($woocommerce_indicators as $indicator) {
+			if (strpos($form_id, $indicator) !== false || strpos($form_class, $indicator) !== false) {
+				return true;
+			}
+		}
+		
+		// Check for WooCommerce-specific form fields
+		$woocommerce_fields = [
+			'billing_first_name', 'billing_last_name', 'billing_email', 'billing_phone',
+			'shipping_first_name', 'shipping_last_name', 'shipping_email', 'shipping_phone',
+			'order_notes', 'payment_method', 'terms', 'place_order'
+		];
+		
+		$inputs = $form->getElementsByTagName('input');
+		foreach ($inputs as $input) {
+			$name = $input->getAttribute('name') ?: '';
+			if (in_array($name, $woocommerce_fields)) {
+				return true;
+			}
+		}
+		
+		// Check if form is within WooCommerce checkout page
+		$parent = $form->parentNode;
+		while ($parent && $parent->nodeType === XML_ELEMENT_NODE) {
+			$parent_id = strtolower($parent->getAttribute('id') ?: '');
+			$parent_class = strtolower($parent->getAttribute('class') ?: '');
+			
+			if (strpos($parent_id, 'woocommerce') !== false || 
+				strpos($parent_class, 'woocommerce') !== false ||
+				strpos($parent_id, 'checkout') !== false ||
+				strpos($parent_class, 'checkout') !== false) {
+				return true;
+			}
+			
+			$parent = $parent->parentNode;
+		}
+		
+		return false;
+	}
+
+	/**
+	 * Check if a form is a payment gateway iframe
+	 *
+	 * @param DOMElement $form The form element to check
+	 * @return bool True if it's a payment gateway iframe
+	 */
+	private function is_payment_gateway_iframe($form) {
+		// Check if form is within an iframe
+		$parent = $form->parentNode;
+		while ($parent && $parent->nodeType === XML_ELEMENT_NODE) {
+			if (property_exists($parent, 'tagName') && $parent->tagName === 'iframe') {
+				// Check if it's a payment gateway iframe
+				$src = strtolower($parent->getAttribute('src') ?: '');
+				$payment_gateway_indicators = [
+					'stripe', 'paypal', 'square', 'adyen', 'braintree', 'klarna',
+					'checkout', 'payment', 'gateway', 'processor', 'merchant',
+					'secure', 'ssl', 'https', 'payment-form', 'checkout-form'
+				];
+				
+				foreach ($payment_gateway_indicators as $indicator) {
+					if (strpos($src, $indicator) !== false) {
+						return true;
+					}
+				}
+				
+				// Check iframe title and name attributes
+				$title = strtolower($parent->getAttribute('title') ?: '');
+				$name = strtolower($parent->getAttribute('name') ?: '');
+				
+				foreach ($payment_gateway_indicators as $indicator) {
+					if (strpos($title, $indicator) !== false || strpos($name, $indicator) !== false) {
+						return true;
+					}
+				}
+			}
+			
+			$parent = $parent->parentNode;
+		}
+		
+		// Check form itself for payment gateway indicators
+		$form_id = strtolower($form->getAttribute('id') ?: '');
+		$form_class = strtolower($form->getAttribute('class') ?: '');
+		$form_action = strtolower($form->getAttribute('action') ?: '');
+		
+		$payment_indicators = [
+			'stripe', 'paypal', 'square', 'adyen', 'braintree', 'klarna',
+			'payment', 'gateway', 'processor', 'merchant', 'secure', 'ssl'
+		];
+		
+		foreach ($payment_indicators as $indicator) {
+			if (strpos($form_id, $indicator) !== false || 
+				strpos($form_class, $indicator) !== false ||
+				strpos($form_action, $indicator) !== false) {
+				return true;
 			}
 		}
 		

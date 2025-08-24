@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2025-01-23
+
+### Added
+- Enhanced WooCommerce checkout and payment gateway detection
+- JavaScript-side exclusions for WooCommerce and payment forms
+- Comprehensive form detection logic for privacy checkboxes
+
+### Changed
+- Improved form integration to respect global form integration setting
+- Enhanced payment gateway iframe detection and exclusion
+- WooCommerce privacy checkbox now respects global form integration setting
+
+### Fixed
+- WooCommerce checkout forms no longer receive privacy checkboxes when global form integration is disabled
+- Payment gateway iframes are properly excluded from privacy checkbox injection
+- Enhanced form detection to prevent interference with checkout processes
+- WooCommerce privacy checkbox now properly controlled by global form integration setting
+- WooCommerce privacy checkbox now respects both "Global Form Integration" and "WooCommerce Integration" settings
+
 ## [2.0.0] - 2025-01-23
 
 ### Added
