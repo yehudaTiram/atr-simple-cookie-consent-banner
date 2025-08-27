@@ -6,6 +6,7 @@
 **הגרסה האחרונה זמינה להורדה מ:**
 [https://atarimtr.co.il/wp-content/uploads/2025/02/atr-simple-cookie-consent-banner.zip](https://atarimtr.co.il/wp-content/uploads/2025/02/atr-simple-cookie-consent-banner.zip)
 
+לא להוריד הגיטהאב כאן!!!## 
 ---
 
 ## 🌍 שפות ותרגום (i18n)
