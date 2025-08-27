@@ -39,47 +39,57 @@ class ATR_Simple_Cookie_Consent_Banner_Forms
      *
      * @since 2.0.0
      */
-    public function __construct($plugin_name)
-    {
-        $this->plugin_name = $plugin_name;
-        $this->options = get_option($plugin_name, array());
-        
-        // Only proceed if global form integration is enabled
-        if (!empty($this->options['global_form_integration'])) {
-            $this->init_hooks();
-        }
-    }
+    	public function __construct($plugin_name)
+	{
+		$this->plugin_name = $plugin_name;
+		$this->options = get_option($plugin_name, array());
+		
+		// Only proceed if global form integration is enabled
+		if (!empty($this->options['global_form_integration'])) {
+			$this->init_hooks();
+		} else {
+			// Debug: Log when forms integration is disabled
+			if (is_admin()) {
+				error_log('ATR SCB Forms: Global form integration disabled. Options: ' . print_r($this->options, true));
+			}
+		}
+	}
 
-    /**
-     * Initialize WordPress hooks
-     *
-     * @since 2.0.0
-     */
-    private function init_hooks()
-    {
-        // Comment form integration
-        add_filter('comment_form_defaults', array($this, 'add_privacy_checkbox_to_comments'));
-        add_action('comment_post', array($this, 'validate_comment_privacy_checkbox'));
-        
-        // Contact Form 7 integration
-        add_action('wpcf7_form_elements', array($this, 'add_privacy_checkbox_to_cf7'));
-        add_filter('wpcf7_validate', array($this, 'validate_cf7_privacy_checkbox'), 10, 2);
-        
-        // Gravity Forms integration
-        add_filter('gform_field_content', array($this, 'add_privacy_checkbox_to_gravity_forms'), 10, 2);
-        add_filter('gform_entry_is_spam', array($this, 'validate_gravity_forms_privacy_checkbox'), 10, 3);
-        
-        // Ninja Forms integration
-        add_action('ninja_forms_display_field', array($this, 'add_privacy_checkbox_to_ninja_forms'));
-        add_filter('ninja_forms_process', array($this, 'validate_ninja_forms_privacy_checkbox'));
-        
-        // Elementor Forms integration
-        add_action('elementor_pro/forms/process', array($this, 'validate_elementor_form_privacy_checkbox'), 10, 2);
-        add_action('elementor_pro/forms/render_field/type=submit', array($this, 'add_privacy_checkbox_to_elementor_forms'), 10, 2);
-        
-        // Generic form integration using JavaScript
-        add_action('wp_footer', array($this, 'inject_generic_form_script'));
-    }
+    	/**
+	 * Initialize WordPress hooks
+	 *
+	 * @since 2.0.0
+	 */
+		public function init_hooks()
+	{
+		// Ensure we have a valid plugin name
+		if (empty($this->plugin_name)) {
+			return;
+		}
+		
+		// Comment form integration
+		add_filter('comment_form_defaults', array($this, 'add_privacy_checkbox_to_comments'));
+		add_action('comment_post', array($this, 'validate_comment_privacy_checkbox'));
+
+		// Contact Form 7 integration
+		add_filter('wpcf7_form_elements', array($this, 'add_privacy_checkbox_to_cf7'), 99);
+		add_filter('wpcf7_validate', array($this, 'validate_cf7_privacy_checkbox'), 10, 2);
+		
+		// Gravity Forms integration
+		add_filter('gform_field_content', array($this, 'add_privacy_checkbox_to_gravity_forms'), 10, 2);
+		add_filter('gform_entry_is_spam', array($this, 'validate_gravity_forms_privacy_checkbox'), 10, 3);
+		
+		// Ninja Forms integration
+		add_action('ninja_forms_display_field', array($this, 'add_privacy_checkbox_to_ninja_forms'));
+		add_filter('ninja_forms_process', array($this, 'validate_ninja_forms_privacy_checkbox'));
+		
+		// Elementor Forms integration
+		add_action('elementor_pro/forms/process', array($this, 'validate_elementor_form_privacy_checkbox'), 10, 2);
+		add_action('elementor_pro/forms/render_field/type=submit', array($this, 'add_privacy_checkbox_to_elementor_forms'), 10, 2);
+		
+		// Generic form integration using JavaScript
+		add_action('wp_footer', array($this, 'inject_generic_form_script'));
+	}
 
     /**
      * Add privacy checkbox to comment forms
@@ -118,24 +128,29 @@ class ATR_Simple_Cookie_Consent_Banner_Forms
      * @param string $content Form content
      * @return string Modified content
      */
-    public function add_privacy_checkbox_to_cf7($content)
-    {
-        // Skip if global form integration is disabled
-        if (empty($this->options['global_form_integration'])) {
-            return $content;
-        }
+    	public function add_privacy_checkbox_to_cf7($content)
+	{
+		// Debug: Log when this method is called
+		if (is_admin()) {
+			error_log('ATR SCB Forms: CF7 method called. Global form integration: ' . (isset($this->options['global_form_integration']) ? $this->options['global_form_integration'] : 'NOT SET'));
+		}
+		
+		// Skip if global form integration is disabled
+		if (empty($this->options['global_form_integration'])) {
+			return $content;
+		}
 
         // Create a temporary DOM document to analyze the form
         $dom = new DOMDocument();
         libxml_use_internal_errors(true);
         $dom->loadHTML('<?xml encoding="utf-8" ?>' . $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         libxml_clear_errors();
-        
+		
         $form_element = $dom->getElementsByTagName('form')->item(0);
         if (!$form_element) {
             return $content;
         }
-
+		var_dump($content);
         // Check if this form should get a privacy checkbox
         if (!$this->should_add_privacy_checkbox($form_element)) {
             return $content;
@@ -175,12 +190,12 @@ class ATR_Simple_Cookie_Consent_Banner_Forms
      * @param object $field Field object
      * @return string Modified content
      */
-    public function add_privacy_checkbox_to_gravity_forms($content, $field)
-    {
-        // Skip if global form integration is disabled
-        if (empty($this->options['global_form_integration'])) {
-            return $content;
-        }
+    	public function add_privacy_checkbox_to_gravity_forms($content, $field)
+	{
+		// Skip if global form integration is disabled
+		if (empty($this->options['global_form_integration'])) {
+			return $content;
+		}
 
         // Only add to submit button field
         if ($field->type === 'submit') {
@@ -223,12 +238,12 @@ class ATR_Simple_Cookie_Consent_Banner_Forms
      * @since 2.0.0
      * @param array $field Field data
      */
-    public function add_privacy_checkbox_to_ninja_forms($field)
-    {
-        // Skip if global form integration is disabled
-        if (empty($this->options['global_form_integration'])) {
-            return;
-        }
+    	public function add_privacy_checkbox_to_ninja_forms($field)
+	{
+		// Skip if global form integration is disabled
+		if (empty($this->options['global_form_integration'])) {
+			return;
+		}
 
         // Only add to submit button field
         if ($field['type'] === 'submit') {
@@ -268,12 +283,12 @@ class ATR_Simple_Cookie_Consent_Banner_Forms
      * @param object $field Field object
      * @param array $field_data Field data
      */
-    public function add_privacy_checkbox_to_elementor_forms($field, $field_data)
-    {
-        // Skip if global form integration is disabled
-        if (empty($this->options['global_form_integration'])) {
-            return;
-        }
+    	public function add_privacy_checkbox_to_elementor_forms($field, $field_data)
+	{
+		// Skip if global form integration is disabled
+		if (empty($this->options['global_form_integration'])) {
+			return;
+		}
 
         // Only add to submit button field
         if ($field_data['field_type'] === 'submit') {
@@ -309,12 +324,12 @@ class ATR_Simple_Cookie_Consent_Banner_Forms
      *
      * @since 2.0.0
      */
-    public function inject_generic_form_script()
-    {
-        $privacy_policy_url = get_privacy_policy_url();
-        $privacy_policy_text = __('Privacy Policy', 'atr-simple-cookie-consent-banner');
-        $accept_text = __('I have read and agree to the', 'atr-simple-cookie-consent-banner');
-        $required_text = __('You must accept the privacy policy before submitting the form.', 'atr-simple-cookie-consent-banner');
+    	public function inject_generic_form_script()
+	{
+		$privacy_policy_url = get_privacy_policy_url();
+		$privacy_policy_text = __('Privacy Policy', 'atr-simple-cookie-consent-banner');
+		$accept_text = __('I have read and agree to the', 'atr-simple-cookie-consent-banner');
+		$required_text = __('You must accept the privacy policy before submitting the form.', 'atr-simple-cookie-consent-banner');
         
         ?>
         <script>

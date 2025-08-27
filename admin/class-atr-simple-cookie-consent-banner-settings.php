@@ -82,6 +82,9 @@ class ATR_Simple_Cookie_Consent_Banner_Settings
 
         // Add settings link to plugins page
         add_filter('plugin_action_links_' . plugin_basename($this->plugin_slug), array($this, 'add_settings_link'));
+        
+        // Add admin notices hook
+        add_action('admin_notices', array($this, 'display_admin_notices'));
     }
 
     /**
@@ -93,6 +96,84 @@ class ATR_Simple_Cookie_Consent_Banner_Settings
         $this->settings = $this->settings_fields();
         $this->options = $this->get_options();
         $this->register_settings();
+    }
+
+    /**
+     * Display admin notices
+     * @return void
+     */
+    public function display_admin_notices()
+    {
+        // Get any stored notices
+        $notices = get_transient('atr_scb_admin_notices');
+        
+        if ($notices && is_array($notices)) {
+            foreach ($notices as $notice) {
+                $type = isset($notice['type']) ? $notice['type'] : 'info';
+                $message = isset($notice['message']) ? $notice['message'] : '';
+                $dismissible = isset($notice['dismissible']) ? $notice['dismissible'] : true;
+                
+                if (!empty($message)) {
+                    $dismissible_class = $dismissible ? 'is-dismissible' : '';
+                    printf(
+                        '<div class="notice notice-%s %s" id="atr-scb-notice-%s"><p>%s</p></div>',
+                        esc_attr($type),
+                        esc_attr($dismissible_class),
+                        esc_attr(uniqid()),
+                        wp_kses_post($message)
+                    );
+                }
+            }
+            
+            // Clear the notices after displaying
+            delete_transient('atr_scb_admin_notices');
+        }
+    }
+
+    /**
+     * Add an admin notice
+     * @param string $message The notice message
+     * @param string $type The notice type (info, success, warning, error)
+     * @param bool $dismissible Whether the notice is dismissible
+     * @return void
+     */
+    public function add_admin_notice($message, $type = 'info', $dismissible = true)
+    {
+        $notices = get_transient('atr_scb_admin_notices');
+        if (!is_array($notices)) {
+            $notices = array();
+        }
+        
+        $notices[] = array(
+            'message' => $message,
+            'type' => $type,
+            'dismissible' => $dismissible
+        );
+        
+        set_transient('atr_scb_admin_notices', $notices, 60); // Store for 1 minute
+    }
+
+    /**
+     * Static method to add an admin notice from anywhere in the plugin
+     * @param string $message The notice message
+     * @param string $type The notice type (info, success, warning, error)
+     * @param bool $dismissible Whether the notice is dismissible
+     * @return void
+     */
+    public static function add_notice($message, $type = 'info', $dismissible = true)
+    {
+        $notices = get_transient('atr_scb_admin_notices');
+        if (!is_array($notices)) {
+            $notices = array();
+        }
+        
+        $notices[] = array(
+            'message' => $message,
+            'type' => $type,
+            'dismissible' => $dismissible
+        );
+        
+        set_transient('atr_scb_admin_notices', $notices, 60); // Store for 1 minute
     }
 
     /**
@@ -684,6 +765,32 @@ class ATR_Simple_Cookie_Consent_Banner_Settings
         <div class="wrap" id="<?php echo $this->plugin_slug; ?>">
             <h2><?php _e('Cookie Consent Banner Settings', 'atr-simple-cookie-consent-banner'); ?></h2>
             <p><?php _e('Configure the cookie consent banner behavior and appearance.', 'atr-simple-cookie-consent-banner'); ?></p>
+            
+            <?php
+            // Example notice - you can remove this or modify it
+            $this->add_admin_notice(
+                sprintf(
+                    __('Welcome to the Cookie Consent Banner settings! This plugin helps you comply with Israeli privacy laws. <strong>Important:</strong> Please check our website regularly for plugin updates at <a href="%s" target="_blank">%s</a> to ensure you have the latest version with security patches and new features.', 'atr-simple-cookie-consent-banner'),
+                    'https://atarimtr.co.il/מדריך-התאמת-אתר-וורדפרס-לתיקון-13-לחוק-ה/',
+                    'atarimtr.co.il'
+                ),
+                'info',
+                true
+            );
+            
+            // Debug: Check if the method is working
+            echo '<!-- DEBUG: Notice method called -->';
+            
+            // Alternative: Display notice directly if the system isn't working
+            echo '<div class="notice notice-info is-dismissible"><p>';
+            printf(
+                __('Welcome to the Cookie Consent Banner settings! This plugin helps you comply with Israeli privacy laws.<br><strong>Current Version:</strong> %s.<br><strong>Important:</strong> Please check our website regularly for plugin updates at <a href="%s" target="_blank">%s</a> to ensure you have the latest version with security patches and new features.', 'atr-simple-cookie-consent-banner'),
+                ATR_SCB_VERSION,
+                'https://atarimtr.co.il/מדריך-התאמת-אתר-וורדפרס-לתיקון-13-לחוק-ה/',
+                'atarimtr.co.il'
+            );
+            echo '</p></div>';
+            ?>
 
             <!-- Tab navigation starts -->
             <h2 class="nav-tab-wrapper settings-tabs hide-if-no-js">
