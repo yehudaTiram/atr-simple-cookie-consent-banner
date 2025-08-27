@@ -154,7 +154,7 @@ class ATR_Simple_Cookie_Consent_Banner {
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once ATR_SCB_PLUGIN_DIR . 'includes/class-atr-simple-cookie-consent-banner-public.php';
+		require_once ATR_SCB_PLUGIN_DIR . 'public/class-atr-simple-cookie-consent-banner-public.php';
 
 		/**
 		 * The class responsible for WooCommerce integration.
