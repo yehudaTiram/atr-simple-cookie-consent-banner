@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: ATR Simple Cookie Consent Banner 2.0.0\n"
 "Report-Msgid-Bugs-To: https://atarimtr.co.il/\n"
 "POT-Creation-Date: 2025-08-23 14:45+0300\n"
-"PO-Revision-Date: 2025-08-25 09:44+0300\n"
+"PO-Revision-Date: 2025-08-23 16:54+0300\n"
 "Last-Translator: Yehuda Tiram <yehuda@atarimtr.co.il>\n"
 "Language-Team: \n"
 "Language: he_IL\n"
@@ -243,6 +243,3 @@ msgstr "הוסף תיבת סימון מדיניות פרטיות לכל הטפס
 
 msgid "You must accept the privacy policy before posting a comment."
 msgstr "עליך לקבל את מדיניות הפרטיות לפני פרסום תגובה."
-
-msgid "Welcome to the Cookie Consent Banner settings! This plugin helps you comply with Israeli privacy laws.<br><strong>Current Version:</strong> %s.<br><strong>Important:</strong> Please check our website regularly for plugin updates at <a href=\"%s\" target=\"_blank\">%s</a> to ensure you have the latest version with security patches and new features."
-msgstr "ברוכים הבאים להגדרות באנר הסכמת העוגיות! התוסף הזה עוזר לכם לעמוד בחוקי הפרטיות הישראליים.<br><strong>גרסה נוכחית:</strong> %s.<br><strong>חשוב:</strong> אנא בדקו את האתר שלנו באופן קבוע לעדכוני תוסף בכתובת <a href=\"%s\" target=\"_blank\">%s</a> כדי להבטיח שיש לכם את הגרסה העדכנית ביותר עם תיקוני אבטחה ותכונות חדשות."

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The public-facing functionality of the plugin.
  *
@@ -7,8 +6,7 @@
  * @since    1.0.0
  */
 
-class ATR_Simple_Cookie_Consent_Banner_Public
-{
+class ATR_Simple_Cookie_Consent_Banner_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -35,11 +33,11 @@ class ATR_Simple_Cookie_Consent_Banner_Public
 	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct($plugin_name, $version)
-	{
+	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+
 	}
 
 	/**
@@ -47,11 +45,10 @@ class ATR_Simple_Cookie_Consent_Banner_Public
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles()
-	{
+	public function enqueue_styles() {
 
-		$css_url = ATR_SCB_PLUGIN_URL . 'public/css/atr-scb.css';
-		wp_enqueue_style($this->plugin_name, $css_url, array(), $this->version, 'all');
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url(__FILE__) . 'css/atr-scb.css', array(), $this->version, 'all' );
+
 	}
 
 	/**
@@ -59,41 +56,38 @@ class ATR_Simple_Cookie_Consent_Banner_Public
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts()
-	{
-
-		$js_url = ATR_SCB_PLUGIN_URL . 'public/js/atr-scb.js';
-		wp_enqueue_script($this->plugin_name, $js_url, array(), $this->version, true);
+	public function enqueue_scripts() {
+		
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url(__FILE__) . 'css/atr-scb.js', array(), $this->version, true );
 
 		// Check if we're on the privacy policy page
 		$is_privacy_page = false;
 		$privacy_policy_url = get_privacy_policy_url();
-
+		
 		// More robust privacy page detection
-		if ($privacy_policy_url) {
+		if ( $privacy_policy_url ) {
 			$current_url = get_permalink();
-			$privacy_url_parts = parse_url($privacy_policy_url);
-			$current_url_parts = parse_url($current_url);
-
+			$privacy_url_parts = parse_url( $privacy_policy_url );
+			$current_url_parts = parse_url( $current_url );
+			
 			// Check if current page matches privacy policy URL
-			if (
-				$current_url === $privacy_policy_url ||
-				(isset($privacy_url_parts['path']) && isset($current_url_parts['path']) &&
-					$privacy_url_parts['path'] === $current_url_parts['path'])
-			) {
+			if ( $current_url === $privacy_policy_url || 
+				( isset( $privacy_url_parts['path'] ) && isset( $current_url_parts['path'] ) && 
+				 $privacy_url_parts['path'] === $current_url_parts['path'] ) ) {
 				$is_privacy_page = true;
 			}
 		}
 
 		// Pass settings to JavaScript
-		wp_localize_script($this->plugin_name, 'scbSettings', array(
+		wp_localize_script( $this->plugin_name, 'scbSettings', array(
 			'cookieName' => 'scb_consent',
 			'expiryDays' => 365,
-			'siteName' => get_bloginfo('name'),
+			'siteName' => get_bloginfo( 'name' ),
 			'isPrivacyPage' => $is_privacy_page,
 			'privacyPolicyUrl' => $privacy_policy_url,
-			'privacyNoteText' => __('💡 You can read this page while deciding about cookies', 'atr-simple-cookie-consent-banner'),
-		));
+			'privacyNoteText' => __( '💡 You can read this page while deciding about cookies', 'atr-simple-cookie-consent-banner' ),
+		) );
+
 	}
 
 	/**
@@ -101,20 +95,19 @@ class ATR_Simple_Cookie_Consent_Banner_Public
 	 *
 	 * @since    1.0.0
 	 */
-	public function block_tracking_scripts()
-	{
+	public function block_tracking_scripts() {
 
 		// Check if user has given consent - if yes, don't block anything
-		if ($this->has_consent()) {
+		if ( $this->has_consent() ) {
 			return;
 		}
 
 		// Block Google Analytics
 		$this->block_google_analytics();
-
+		
 		// Block Facebook Pixel
 		$this->block_facebook_pixel();
-
+		
 		// Block other common tracking scripts
 		$this->block_common_tracking();
 	}
@@ -125,17 +118,16 @@ class ATR_Simple_Cookie_Consent_Banner_Public
 	 * @since    1.0.0
 	 * @return bool
 	 */
-	private function has_consent()
-	{
-
-		if (isset($_COOKIE['scb_consent'])) {
-			$consent_data = json_decode(stripslashes($_COOKIE['scb_consent']), true);
-
+	private function has_consent() {
+		
+		if ( isset( $_COOKIE['scb_consent'] ) ) {
+			$consent_data = json_decode( stripslashes( $_COOKIE['scb_consent'] ), true );
+			
 			// Check if consent has required fields and essential is true
-			$has_consent = isset($consent_data['essential']) && $consent_data['essential'] === true;
+			$has_consent = isset( $consent_data['essential'] ) && $consent_data['essential'] === true;
 			return $has_consent;
 		}
-
+		
 		return false;
 	}
 
@@ -144,23 +136,22 @@ class ATR_Simple_Cookie_Consent_Banner_Public
 	 *
 	 * @since    1.0.0
 	 */
-	private function block_google_analytics()
-	{
+	private function block_google_analytics() {
 		// Block gtag
-		wp_enqueue_script('scb-block-gtag', '', array(), null, false);
-		wp_add_inline_script('scb-block-gtag', '
+		wp_enqueue_script( 'scb-block-gtag', '', array(), null, false );
+		wp_add_inline_script( 'scb-block-gtag', '
 			window.gtag = function() { return; };
 			window.dataLayer = window.dataLayer || [];
 			window.dataLayer.push = function() { return; };
-		');
+		' );
 
 		// Block Google Analytics
-		wp_enqueue_script('scb-block-ga', '', array(), null, false);
-		wp_add_inline_script('scb-block-ga', '
+		wp_enqueue_script( 'scb-block-ga', '', array(), null, false );
+		wp_add_inline_script( 'scb-block-ga', '
 			window.ga = function() { return; };
 			window._gaq = window._gaq || [];
 			window._gaq.push = function() { return; };
-		');
+		' );
 	}
 
 	/**
@@ -168,14 +159,13 @@ class ATR_Simple_Cookie_Consent_Banner_Public
 	 *
 	 * @since    1.0.0
 	 */
-	private function block_facebook_pixel()
-	{
-		wp_enqueue_script('scb-block-fbq', '', array(), null, false);
-		wp_add_inline_script('scb-block-fbq', '
+	private function block_facebook_pixel() {
+		wp_enqueue_script( 'scb-block-fbq', '', array(), null, false );
+		wp_add_inline_script( 'scb-block-fbq', '
 			window.fbq = function() { return; };
 			window._fbq = window._fbq || [];
 			window._fbq.push = function() { return; };
-		');
+		' );
 	}
 
 	/**
@@ -183,14 +173,13 @@ class ATR_Simple_Cookie_Consent_Banner_Public
 	 *
 	 * @since    1.0.0
 	 */
-	private function block_common_tracking()
-	{
-		wp_enqueue_script('scb-block-tracking', '', array(), null, false);
-		wp_add_inline_script('scb-block-tracking', '
+	private function block_common_tracking() {
+		wp_enqueue_script( 'scb-block-tracking', '', array(), null, false );
+		wp_add_inline_script( 'scb-block-tracking', '
 			window.track = function() { return; };
 			window.tracking = function() { return; };
 			window.analytics = function() { return; };
-		');
+		' );
 	}
 
 	/**
@@ -198,15 +187,14 @@ class ATR_Simple_Cookie_Consent_Banner_Public
 	 *
 	 * @since    1.0.0
 	 */
-	public function inject_banner_html()
-	{
-
+	public function inject_banner_html() {
+		
 		// Don't show banner if user already has consent
-		if ($this->has_consent()) {
+		if ( $this->has_consent() ) {
 			return;
 		}
-
-?>
+		
+		?>
 		<div id="scb-overlay" class="scb-overlay"></div>
 		<div id="scb-banner" class="scb-banner">
 			<div class="scb-modal">
@@ -215,34 +203,34 @@ class ATR_Simple_Cookie_Consent_Banner_Public
 				</div>
 				<div class="scb-content">
 					<div class="scb-text">
-						<strong><?php echo esc_html(get_bloginfo('name')); ?></strong>
-						<?php echo esc_html(__('We use cookies to ensure the website functions properly and improve user experience. You can choose which types of cookies to enable.', 'atr-simple-cookie-consent-banner')); ?>
+						<strong><?php echo esc_html( get_bloginfo( 'name' ) ); ?></strong>
+						<?php echo esc_html( __( 'We use cookies to ensure the website functions properly and improve user experience. You can choose which types of cookies to enable.', 'atr-simple-cookie-consent-banner' ) ); ?>
 					</div>
 					<div class="scb-actions">
 						<button id="scb-btn-accept-all" class="scb-btn scb-btn-primary" type="button">
-							<span class="scb-btn-text"><?php echo esc_html(__('Accept All', 'atr-simple-cookie-consent-banner')); ?></span>
-							<span class="scb-btn-loading" style="display: none;"><?php echo esc_html(__('Loading...', 'atr-simple-cookie-consent-banner')); ?></span>
+							<span class="scb-btn-text"><?php echo esc_html( __( 'Accept All', 'atr-simple-cookie-consent-banner' ) ); ?></span>
+							<span class="scb-btn-loading" style="display: none;"><?php echo esc_html( __( 'Loading...', 'atr-simple-cookie-consent-banner' ) ); ?></span>
 						</button>
 						<button id="scb-btn-reject" class="scb-btn scb-btn-secondary" type="button">
-							<?php echo esc_html(__('Reject Non-Essential', 'atr-simple-cookie-consent-banner')); ?>
+							<?php echo esc_html( __( 'Reject Non-Essential', 'atr-simple-cookie-consent-banner' ) ); ?>
 						</button>
 						<button id="scb-btn-custom" class="scb-btn scb-btn-link" type="button">
-							<?php echo esc_html(__('Preferences', 'atr-simple-cookie-consent-banner')); ?>
+							<?php echo esc_html( __( 'Preferences', 'atr-simple-cookie-consent-banner' ) ); ?>
 						</button>
 					</div>
 					<div id="scb-settings" class="scb-settings">
 						<form id="scb-form">
 							<fieldset>
-								<legend><?php echo esc_html(__('Cookie Selection', 'atr-simple-cookie-consent-banner')); ?></legend>
-								<label><input type="checkbox" name="essential" checked disabled> <?php echo esc_html(__('Essential (Required)', 'atr-simple-cookie-consent-banner')); ?></label><br>
-								<label><input type="checkbox" name="analytics" value="analytics"> <?php echo esc_html(__('Analytics (Google Analytics)', 'atr-simple-cookie-consent-banner')); ?></label><br>
-								<label><input type="checkbox" name="marketing" value="marketing"> <?php echo esc_html(__('Marketing/Advertising (Facebook/Ads)', 'atr-simple-cookie-consent-banner')); ?></label><br>
+								<legend><?php echo esc_html( __( 'Cookie Selection', 'atr-simple-cookie-consent-banner' ) ); ?></legend>
+								<label><input type="checkbox" name="essential" checked disabled> <?php echo esc_html( __( 'Essential (Required)', 'atr-simple-cookie-consent-banner' ) ); ?></label><br>
+								<label><input type="checkbox" name="analytics" value="analytics"> <?php echo esc_html( __( 'Analytics (Google Analytics)', 'atr-simple-cookie-consent-banner' ) ); ?></label><br>
+								<label><input type="checkbox" name="marketing" value="marketing"> <?php echo esc_html( __( 'Marketing/Advertising (Facebook/Ads)', 'atr-simple-cookie-consent-banner' ) ); ?></label><br>
 								<div class="scb-actions">
 									<button id="scb-btn-save" class="scb-btn scb-btn-primary" type="submit">
-										<?php echo esc_html(__('Save Choices', 'atr-simple-cookie-consent-banner')); ?>
+										<?php echo esc_html( __( 'Save Choices', 'atr-simple-cookie-consent-banner' ) ); ?>
 									</button>
 									<button id="scb-btn-cancel" class="scb-btn scb-btn-secondary" type="button">
-										<?php echo esc_html(__('Cancel', 'atr-simple-cookie-consent-banner')); ?>
+										<?php echo esc_html( __( 'Cancel', 'atr-simple-cookie-consent-banner' ) ); ?>
 									</button>
 								</div>
 							</fieldset>
@@ -250,7 +238,7 @@ class ATR_Simple_Cookie_Consent_Banner_Public
 					</div>
 					<div class="scb-footer">
 						<div class="scb-more" style="display: flex;justify-content: space-between;direction: ltr;">
-							<a href="<?php echo esc_url(get_privacy_policy_url() ?: '#'); ?>" target="_blank" rel="noopener" role="link"><?php echo esc_html(__('Privacy Policy', 'atr-simple-cookie-consent-banner')); ?></a>
+							<a href="<?php echo esc_url( get_privacy_policy_url() ?: '#' ); ?>" target="_blank" rel="noopener" role="link"><?php echo esc_html( __( 'Privacy Policy', 'atr-simple-cookie-consent-banner' ) ); ?></a>
 							<a href="https://atarimtr.co.il/" target="_blank" rel="noopener" role="link">
 								<svg inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)" version="1.1" id="svg2" viewBox="0 0 24 24" height="16" width="16" sodipodi:docname="atr-guten-icon.svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
 									<sodipodi:namedview inkscape:window-maximized="1" inkscape:window-y="-8" inkscape:window-x="-8" inkscape:window-height="1009" inkscape:window-width="1920" inkscape:guide-bbox="true" showguides="false" showgrid="false" inkscape:current-layer="layer3" inkscape:document-units="px" inkscape:cy="12" inkscape:cx="12" inkscape:zoom="33.583333" inkscape:pageshadow="2" inkscape:pageopacity="0.0" borderopacity="1.0" bordercolor="#666666" pagecolor="#ffffff" id="base" units="px" inkscape:showpageshadow="2" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1"></sodipodi:namedview>
@@ -283,6 +271,6 @@ class ATR_Simple_Cookie_Consent_Banner_Public
 				</div>
 			</div>
 		</div>
-<?php
+		<?php
 	}
 }

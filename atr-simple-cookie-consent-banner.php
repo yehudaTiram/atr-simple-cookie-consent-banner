@@ -314,7 +314,7 @@ class ATR_Simple_Cookie_Consent_Banner {
 	 */
 	public function add_plugin_action_links( $links ) {
 		$testing_guide_link = '<a href="' . plugin_dir_url( __FILE__ ) . 'TESTING-GUIDE.md" target="_blank">' . __( 'Testing Guide', 'atr-simple-cookie-consent-banner' ) . '</a>';
-		$settings_link = '<a href="' . admin_url( 'admin.php?page=atr-simple-cookie-consent-banner' ) . '">' . __( 'Settings', 'atr-simple-cookie-consent-banner' ) . '</a>';
+		$settings_link = '<a href="' . admin_url( 'options-general.php?page=atr-simple-cookie-consent-banner' ) . '">' . __( 'Settings', 'atr-simple-cookie-consent-banner' ) . '</a>';
 		array_unshift( $links, $settings_link, $testing_guide_link );
 		return $links;
 	}
