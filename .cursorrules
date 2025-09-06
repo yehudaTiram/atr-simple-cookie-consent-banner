@@ -1,0 +1,116 @@
+# Global WordPress Development Rules (Cursor)
+
+These rules apply to all my WordPress development: classic PHP plugins, block editor plugins, and themes with block editor. Follow these unless I explicitly say otherwise.
+
+## Architecture
+- Classic plugin (WPBP style): main `plugin-slug.php`, `includes/`, `admin/`, `public/`, `classes/`, `languages/`.
+- Block plugin (create-block): `src/`, `block.json`, `build/`, `languages/`, optional PHP `render_callback`.
+- Theme (block editor + Bootstrap 5.x): `functions.php`, `inc/` modules, `assets/` (scss/js), `languages/`.
+
+## PHP Standards
+- WPCS, PSR-4 for classes. Prefix functions with `atr_`.
+- Always check `ABSPATH`. Use `wp_parse_args()` for defaults.
+- Sanitize input; escape output (`esc_*`). Verify nonces for AJAX.
+- Use `wp_send_json_success/error()` consistently.
+
+## Database
+- Always use `$wpdb->prepare()` with placeholders.
+- If there are no parameters, call `$wpdb->get_results($sql, ARRAY_A)` without prepare.
+- Use `ARRAY_A` returns and proper error handling.
+
+## Security
+- Centralize permission checks (e.g., `atr_qr_can_use_scanner()`-style function).
+- Options must be plugin-prefixed (e.g., `project_slug_access_mode`).
+- Never expose sensitive data in JSON.
+
+## JavaScript / React / Blocks
+- Use `@wordpress/element`, `@wordpress/i18n`, modern ES6+.
+- Keep components small; use hooks. Validate props if applicable.
+- For blocks: use `@wordpress/scripts`; declare assets in `block.json`.
+- Read block attributes in PHP `render_callback` or via data attributes.
+
+## i18n
+- All strings translatable. `__()` for single, `_n()` for plural.
+- Text domain = project slug. Generate JSON (`wp i18n make-json`) for JS.
+
+## Build
+- Use `npm run build` (wp-scripts) and `npm run start` for dev.
+- Rebuild after JS/SCSS changes. Compiled assets go to `build/` (plugins) or theme `dist/`.
+
+## AJAX Endpoints
+- Prefix actions with `atr_`. Register both `wp_ajax_` and `wp_ajax_nopriv_` when appropriate.
+- Verify nonces. Sanitize inputs. Return consistent JSON structures.
+
+## Settings Pattern (Admin Settings Class)
+- Always implement settings via a dedicated class under `includes/admin/`; single responsibility.
+- MUST add submenu under `ATR_PLUGINS_MENU_SLUG` as parent. If the constant is missing/empty, fall back to `options-general.php`.
+- Use the Settings API. Provide:
+  - `get_options()` merging saved values with defaults
+  - `validate_fields()` for sanitization/validation and `add_settings_error()` on invalid inputs
+- Store options as a single array under the plugin slug or as prefixed options. Checkbox fields persist "off" with a hidden field.
+- Roles pickers: use `apply_filters('editable_roles', wp_roles()->roles)`.
+- Permissions integration: settings include `access_mode` ('public'|'logged_in'|'roles') and `allowed_roles`; centralized permission function must read them.
+
+## Themes (Block Editor + Bootstrap)
+- Enqueue Bootstrap 5.x via `wp_enqueue_style/script` with dependencies; avoid duplicate loads.
+- Use `add_theme_support` for `wp-block-styles`, `editor-styles`, `responsive-embeds`.
+
+## Shortcodes (Classic Plugins/Themes)
+- Register via `add_shortcode` on init. Handlers sanitize attributes and escape outputs.
+- Keep shortcode handlers thin; delegate to services/classes.
+
+## Error Handling
+- Try/catch only around risky operations; surface meaningful messages.
+- Log errors appropriately; don't leak details to end users.
+
+## Performance
+- Minimize queries; add indexes where needed (outside code rules).
+- Memoize/micro-cache where safe; avoid unnecessary re-renders in React.
+
+## Forbidden
+- No eval/exec. No unprepared SQL. No global mutable state without need.
+- Don't hardcode roles/caps; read from settings.
+- Don't ship secrets in the repo.
+
+## Common Patterns (snippets)
+
+PHP plugin header:
+```php
+/**
+ * Plugin Name: Project Name
+ * Version: 1.0.0
+ * Text Domain: project-slug
+ */
+if (!defined('ABSPATH')) exit;
+```
+
+DB query:
+```php
+$sql = "SELECT * FROM {$wpdb->prefix}table WHERE id = %d";
+$prepared = $wpdb->prepare($sql, $id);
+$rows = $wpdb->get_results($prepared, ARRAY_A);
+```
+
+AJAX:
+```php
+add_action('wp_ajax_atr_action', 'atr_action');
+add_action('wp_ajax_nopriv_atr_action', 'atr_action');
+function atr_action() {
+    if (!wp_verify_nonce($_POST['nonce'] ?? '', 'project_nonce')) {
+        wp_send_json_error('Security check failed'); return;
+    }
+    // sanitize/process...
+    wp_send_json_success(['ok' => true]);
+}
+```
+
+Settings (menu integration):
+```php
+if (defined('ATR_PLUGINS_MENU_SLUG') && constant('ATR_PLUGINS_MENU_SLUG')) {
+    add_submenu_page((string) constant('ATR_PLUGINS_MENU_SLUG'), __('Project Settings','project-slug'),
+        __('Project','project-slug'),'manage_options','project-slug', [$this,'settings_page']);
+} else {
+    add_submenu_page('options-general.php', __('Project Settings','project-slug'),
+        __('Project','project-slug'),'manage_options','project-slug', [$this,'settings_page']);
+}
+```
